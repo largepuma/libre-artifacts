@@ -11,7 +11,7 @@ https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![Best with Opus 5.5](https://img.shields.io/badge/Best%20with-Opus%205.5-d97757) ![Harness](https://img.shields.io/badge/Cursor%20%C2%B7%20Claude%20Code%20%C2%B7%20Codex-supported-1f6feb)
 
-This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems and data dashboards, each opened in its own editor that runs on your machine. A fifth skill, `dataviz`, is the chart guide the agent reads before it draws any chart, in these skills or anywhere else.
+This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems, data dashboards and motion films, each opened in its own editor that runs on your machine. One more skill, `dataviz`, is the chart guide the agent reads before it draws any chart, in these skills or anywhere else.
 
 The original `baoyu-design` skill (self‑contained HTML mockups and prototypes) has been archived to [`archive/baoyu-design/`](archive/baoyu-design/).
 
@@ -27,6 +27,7 @@ No website, no separate subscription, no upload step. The agent already on your 
 | [`claude-design`](skills/claude-design/) | A canvas of artboards: `project/canvas.json` plus `.dc.html` Design Components | The canvas editor: artboards side by side, play prototypes, retype copy, adjust tweaks; export HTML, PDF or PNG |
 | [`claude-design-system`](skills/claude-design-system/) | Design systems: tokens, a README brand book, component previews, fonts, asset groups | The design system editor: browse and edit colors, type, components and assets |
 | [`claude-dashboard`](skills/claude-dashboard/) | Data‑backed dashboards: datasets (CSV, TSV, JSON) and a page of charts, numbers and tables over them | The dashboard page: live charts, filters, and a Sources panel that traces every number to its rows |
+| [`claude-motion`](skills/claude-motion/) | Short animated films: scene modules where every frame is a pure function of time, plus a code‑written score | The Motion player: play, scrub and listen; export MP4 or GIF in the browser |
 | [`dataviz`](skills/dataviz/) | Better charts in any medium (HTML, SVG, d3, matplotlib, plotly…): picking the form, colors that stay readable in light and dark and for color‑blind readers, marks, legends and tooltips, with a palette validator script | Nothing to open: the agent reads it before writing chart code; swap [`palette.md`](skills/dataviz/references/palette.md) for your brand's colors |
 
 ---
@@ -61,6 +62,12 @@ A design system is tokens, a README brand book, component previews, fonts and as
 
 A dashboard is datasets (CSV, TSV or JSON) and a page of charts, numbers and tables computed from them. The charts are live, and the Sources panel traces every number back to its rows. Give the agent a newer export and it swaps the file in; the page recomputes every number. Numbers, dates and labels follow your language. *Above: a year of daily X account analytics, with sample data.*
 
+### `claude-motion`: animated films
+
+<img src="assets/screenshots/claude-motion.webp" alt="A 12-second film for a made-up night market playing in the claude-motion player, with its three scenes on the timeline" width="880">
+
+A film is a handful of scenes, each a small JavaScript module that draws its frame from the time `t`, plus a score the player synthesizes in the browser. The agent asks three questions (style, colors, length), writes a rough cut you can play at once, then fills in each scene while you watch. Scrub it, turn the sound on, and export MP4 or GIF from the player; nothing leaves your machine. *Above: a 12-second teaser for a made-up night market.*
+
 ### Run the editors
 
 Each `SKILL.md` keeps the type's original instructions nearly word for word; only the Artifact tool calls are swapped for local ones. That tool lives inside each skill as `scripts/artifact.mjs` (Node 20+, the dashboard's Node 22+; nothing to install). The agent runs it for you; by hand:
@@ -72,7 +79,7 @@ node skills/claude-slides/scripts/artifact.mjs upload designs/q3-review hero.jpg
 node skills/claude-slides/scripts/artifact.mjs list                                 # find design systems on disk
 ```
 
-A dashboard is written through the same script (`write-db`, `read-db`, `upload`, `check`, `open`) into its own store under `<root>/db/`. Each skill runs its own local server, and everything in `scripts/` ships prebuilt: plain JavaScript that runs on Node alone, with nothing to install or build.
+A dashboard or a film is written through the same script (`write-db`, `read-db`, `upload`, `check`, `open`) into its own store under `<root>/db/`. Each skill runs its own local server, and everything in `scripts/` ships prebuilt: plain JavaScript that runs on Node alone, with nothing to install or build.
 
 ---
 
@@ -143,7 +150,7 @@ The agent clones or fetches the repo, loads `SKILL.md`, and proceeds — perfect
 
 ### Use it
 
-Once a skill is installed (or fetched), ask for what you want (*"Make a 12‑slide deck from this PRD"*, *"Turn this CSV into a dashboard"*) or call one by name: `/claude-slides`, `/claude-design`, `/claude-design-system` or `/claude-dashboard` in Claude Code, `$claude-slides` and so on in Codex. The agent writes the files under `designs/<slug>/`, starts the editor, and gives you its `http://127.0.0.1` URL.
+Once a skill is installed (or fetched), ask for what you want (*"Make a 12‑slide deck from this PRD"*, *"Turn this CSV into a dashboard"*) or call one by name: `/claude-slides`, `/claude-design`, `/claude-design-system`, `/claude-dashboard` or `/claude-motion` in Claude Code, `$claude-slides` and so on in Codex. The agent writes the files under `designs/<slug>/`, starts the editor, and gives you its `http://127.0.0.1` URL.
 
 ---
 
