@@ -6,6 +6,10 @@
 
 [![License: MIT for own code, see NOTICE](https://img.shields.io/badge/License-MIT%20for%20own%20code%20%C2%B7%20see%20NOTICE-blue.svg)](NOTICE.md) ![Best with Opus 5.5](https://img.shields.io/badge/Best%20with-Opus%205.5-d97757) ![Harness](https://img.shields.io/badge/Cursor%20%C2%B7%20Claude%20Code%20%C2%B7%20Codex-supported-1f6feb)
 
+<a href="https://github.com/largepuma/libre-artifacts/releases/download/v1.2.0/libre-artifacts-demo.mp4"><img src="assets/demo/libre-artifacts-demo.gif" alt="22 秒演示：让编码 Agent 做一套 5 页幻灯片，幻灯片在 libre-slides 编辑器里一页页出现，然后手动改写封面标题" width="640"></a>
+
+*22 秒，由 `libre-motion` 用 libre-slides 编辑器的真实录屏剪成。[观看带声音的高清版（MP4）](https://github.com/largepuma/libre-artifacts/releases/download/v1.2.0/libre-artifacts-demo.mp4)。*
+
 本仓库把 claude.ai 的 **Artifact 类型**搬到本地 Agent 上：可编辑的幻灯片、设计画布、设计系统、数据仪表盘和动画短片，每一种都用它自己的编辑器打开，编辑器就运行在你的电脑上。还有一个技能 `dataviz` 是一份图表指南：Agent 在画任何图表之前先读它，不管是在这几个技能里还是别处。
 
 > **非官方项目。** libre-artifacts 是社区项目，与 Anthropic 无隶属或背书关系。各技能沿用 claude.ai Artifact 类型的文件格式。

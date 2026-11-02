@@ -6,6 +6,10 @@
 
 [![License: MIT for own code, see NOTICE](https://img.shields.io/badge/License-MIT%20for%20own%20code%20%C2%B7%20see%20NOTICE-blue.svg)](NOTICE.md) ![Best with Opus 5.5](https://img.shields.io/badge/Best%20with-Opus%205.5-d97757) ![Harness](https://img.shields.io/badge/Cursor%20%C2%B7%20Claude%20Code%20%C2%B7%20Codex-supported-1f6feb)
 
+<a href="https://github.com/largepuma/libre-artifacts/releases/download/v1.2.0/libre-artifacts-demo.mp4"><img src="assets/demo/libre-artifacts-demo.gif" alt="A 22-second demo: a coding agent is asked for a five-slide deck, the slides arrive one by one in the libre-slides editor, then the cover title is retyped by hand" width="640"></a>
+
+*22 seconds, made with `libre-motion` from a real recording of the slides editor. [Watch it in HD with sound (MP4)](https://github.com/largepuma/libre-artifacts/releases/download/v1.2.0/libre-artifacts-demo.mp4).*
+
 This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems, data dashboards and motion films, each opened in its own editor that runs on your machine. One more skill, `dataviz`, is the chart guide the agent reads before it draws any chart, in these skills or anywhere else.
 
 > **Unofficial.** libre-artifacts is a community project, not affiliated with or endorsed by Anthropic. Its skills follow the file formats of claude.ai's Artifact types.
