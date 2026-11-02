@@ -10,6 +10,14 @@
 
 *22 seconds, made with `libre-motion` from a real recording of the slides editor. [Watch it in HD with sound (MP4)](https://github.com/largepuma/libre-artifacts/releases/download/v1.2.0/libre-artifacts-demo.mp4).*
 
+**Try it in 30 seconds** (Node 20+, any agent that reads skills):
+
+```bash
+npx skills add largepuma/libre-artifacts
+```
+
+Then ask your agent: *"Make a five-slide deck about bees in the city."* It writes the deck, opens the editor on your machine and gives you the link. [More install options](#install).
+
 This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems, data dashboards and motion films, each opened in its own editor that runs on your machine. One more skill, `dataviz`, is the chart guide the agent reads before it draws any chart, in these skills or anywhere else.
 
 > **Unofficial.** libre-artifacts is a community project, not affiliated with or endorsed by Anthropic. Its skills follow the file formats of claude.ai's Artifact types.

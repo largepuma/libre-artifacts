@@ -10,6 +10,14 @@
 
 *22 秒，由 `libre-motion` 用 libre-slides 编辑器的真实录屏剪成。[观看带声音的高清版（MP4）](https://github.com/largepuma/libre-artifacts/releases/download/v1.2.0/libre-artifacts-demo.mp4)。*
 
+**30 秒上手**（需要 Node 20+，以及任意支持技能的 Agent）：
+
+```bash
+npx skills add largepuma/libre-artifacts
+```
+
+然后对 Agent 说：*"做一套 5 页幻灯片，讲城市里的蜜蜂。"* 它会写好幻灯片，在你电脑上打开编辑器，并把链接给你。[更多安装方式](#安装)。
+
 本仓库把 claude.ai 的 **Artifact 类型**搬到本地 Agent 上：可编辑的幻灯片、设计画布、设计系统、数据仪表盘和动画短片，每一种都用它自己的编辑器打开，编辑器就运行在你的电脑上。还有一个技能 `dataviz` 是一份图表指南：Agent 在画任何图表之前先读它，不管是在这几个技能里还是别处。
 
 > **非官方项目。** libre-artifacts 是社区项目，与 Anthropic 无隶属或背书关系。各技能沿用 claude.ai Artifact 类型的文件格式。
