@@ -22,7 +22,7 @@ This repo brings claude.ai's **Artifact types** to local agents: editable slide 
 
 > **Unofficial.** libre-artifacts is a community project, not affiliated with or endorsed by Anthropic. Its skills follow the file formats of claude.ai's Artifact types.
 
-No website, no separate subscription, no upload step. The agent already on your machine does the work, and every artifact stays in your repo.
+Everything runs on your machine: the agent you already use does the work, the editors run on localhost, and every artifact stays in your repo as plain files.
 
 ---
 
@@ -103,7 +103,7 @@ A dashboard or a film is written through the same script (`write-db`, `read-db`,
 
 ## Why run it locally
 
-- **Free yourself from the website.** You get the vast majority of `claude.ai/design`'s capabilities without ever leaving your editor — same methodology, same craft standards, same output format.
+- **Work where your code is.** The skills follow the file formats and craft guides of claude.ai's Artifact types, so the agent in your editor or terminal makes the same kinds of artifacts, as files in your project.
 - **Best with Opus 5.5.** The skill is a long, demanding design brief; the stronger the model, the better the result. Pair it with **Claude Opus 5.5** for the best output, and it still works well on other capable models.
 - **Edit side by side with the agent.** Each editor runs on `localhost`; your edits save back into the same files the agent writes, so you can take turns.
 - **Work together, no cloud.** Share an editor on your local network with a link per role; others edit, comment or watch, and you decide who stays in. Version history shows who changed what and brings any version back.
