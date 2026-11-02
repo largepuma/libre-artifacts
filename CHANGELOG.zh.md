@@ -2,6 +2,12 @@
 
 [English](./CHANGELOG.md) | 中文
 
+## 1.0.1 - 2026-11-02
+
+### 文档
+- 新增 `NOTICE.md`，参照上游项目写明各部分的许可：MIT 只管维护者自己写的部分（本地工具、文档、测试和示例）；取自 Anthropic 的部分（改编自 Artifact 类型的技能说明和参考文档、`dataviz`、编辑器和 Motion 播放器、Anthropicons 图标字体）权利归 Anthropic，不适用 MIT；打包进来的开源代码各按原许可。1.0.0 的 README 误称除编辑器外都是 MIT。`LICENSE`、README 和每个 `SKILL.md`（新增 `license` 一行）现在都指向 `NOTICE.md`。
+- `libre-dashboard` 和其他编辑器一样，在 `scripts/editor/third-party-licenses.txt` 里附上所用开源包的许可。
+
 ## 1.0.0 - 2026-11-02
 
 以 **libre-artifacts** 之名首次发布，承接 [JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design) v2.3.0（此前的历史见 [CHANGELOG.upstream.zh.md](./CHANGELOG.upstream.zh.md)）。
