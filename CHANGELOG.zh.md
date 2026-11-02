@@ -2,6 +2,14 @@
 
 [English](./CHANGELOG.md) | 中文
 
+## 1.2.0 - 2026-11-02
+
+### 新功能
+- `libre-motion`：播放器也能像其他编辑器一样在局域网分享了：`share <root>`（或 `open <root> --lan`）为每种角色打印一个链接，画面右上角的 **Share** 按钮管理谁能进来。播放器没有评论功能，所以评论角色只能观看。
+- `libre-motion`：版本历史。每次修改（包括 Agent 的）都存进动画的 `history/` 文件夹；**History** 按钮按人列出各个版本，可以预览当时的动画，也能恢复整个版本或其中一份文档。
+- `libre-motion`：显示"谁在这里"的头像（Agent 写入时也会出现）；可以在 Share 面板的 Export 标签里把整个文件夹下载成 zip，命令行是 `archive <root>`。
+- `libre-motion`：播放器有了固定的默认端口 4760 和不变的页面地址 `/motion/<id>/`；新的动画文件夹会写入默认的 `.gitignore`。
+
 ## 1.1.0 - 2026-11-02
 
 为四个编辑器引入上游项目 2.4.0 至 2.7.1 的版本（详见 [CHANGELOG.upstream.zh.md](./CHANGELOG.upstream.zh.md)）。`libre-motion` 暂时还没有这些功能。

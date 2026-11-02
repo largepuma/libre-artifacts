@@ -2,6 +2,14 @@
 
 English | [中文](./CHANGELOG.zh.md)
 
+## 1.2.0 - 2026-11-02
+
+### Features
+- `libre-motion`: the player now shares on your local network like the other editors: `share <root>` (or `open <root> --lan`) prints a link per role, and the **Share** button at the top right of the film manages who is in. It has no comments, so the commenter role only watches.
+- `libre-motion`: version history. Every change, the agent's included, is kept in the film's `history/` folder; the **History** button lists versions by person, previews the film as it was, and restores a version or one document.
+- `libre-motion`: who's-here avatars (the agent shows up while it writes), and the whole folder as a zip from the Share panel's Export tab or `archive <root>`.
+- `libre-motion`: the player now has a fixed default port, 4760, and a stable page address, `/motion/<id>/`. A new film folder gets a default `.gitignore`.
+
 ## 1.1.0 - 2026-11-02
 
 Brings in the upstream project's releases 2.4.0 to 2.7.1 for the four editors (the details: [CHANGELOG.upstream.md](./CHANGELOG.upstream.md)). `libre-motion` does not have these yet.
