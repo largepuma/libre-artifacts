@@ -1,0 +1,6 @@
+#stage { --ground:#14213D; --main:#E07A3F; --second:#F6EBDD; --accent:#F2C14E; color:var(--second); font-family:var(--sans, system-ui, sans-serif) }
+.ground { position:absolute; inset:0; background:radial-gradient(120% 90% at 50% 120%, color-mix(in srgb, var(--main) 35%, var(--ground)), var(--ground)) }
+.words { position:absolute; margin:0; display:flex; flex-direction:column; gap:24px } .words > * { margin:0 }
+.line { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-size:150px; line-height:1; font-weight:400 } .sub { font-size:44px; color:color-mix(in srgb, var(--second) 75%, var(--ground)) }
+.art { position:absolute; inset:0; width:100%; height:100%; overflow:visible }
+.lantern { fill:var(--main) } .lantern-hi { fill:var(--accent) } .cord { stroke:color-mix(in srgb, var(--second) 45%, var(--ground)); stroke-width:3; fill:none }

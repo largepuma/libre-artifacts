@@ -1,11 +1,6 @@
-# baoyu-design
+# libre-artifacts
 
-
-https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
-
-
-
-**在你自己的本地 Agent 上运行 Claude Design —— Cursor、Claude Code、Claude Desktop，或任何能读写文件的编码 Agent。**
+**可编辑的幻灯片、设计画布、设计系统、仪表盘和动画短片，运行在你自己的本地 Agent 上 —— Cursor、Claude Code、Codex，或任何能读写文件的编码 Agent。**
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [更新日志](CHANGELOG.zh.md)
 
@@ -13,7 +8,7 @@ https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
 
 本仓库把 claude.ai 的 **Artifact 类型**搬到本地 Agent 上：可编辑的幻灯片、设计画布、设计系统、数据仪表盘和动画短片，每一种都用它自己的编辑器打开，编辑器就运行在你的电脑上。还有一个技能 `dataviz` 是一份图表指南：Agent 在画任何图表之前先读它，不管是在这几个技能里还是别处。
 
-原来的 `baoyu-design` 技能（以自包含 HTML 产出 UI 稿和原型）已归档到 [`archive/baoyu-design/`](archive/baoyu-design/)。
+> **非官方项目。** libre-artifacts 是社区项目，与 Anthropic 无隶属或背书关系。各技能沿用 claude.ai Artifact 类型的文件格式。
 
 不依赖网站，不需要额外订阅，也不用上传。活儿由你机器上已有的 Agent 完成，所有产物都留在你自己的仓库里。
 
@@ -23,11 +18,11 @@ https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
 
 | 技能 | 产出 | 在哪里修改 |
 |---|---|---|
-| [`claude-slides`](skills/claude-slides/) | 幻灯片：`project/deck.json` 加上每页一个 HTML 文件 | 幻灯片编辑器：放映、改字、拖动；导出 PDF、HTML 或 PowerPoint |
-| [`claude-design`](skills/claude-design/) | 一块画布上的多个画板：`project/canvas.json` 加上 `.dc.html` 设计组件 | 画布编辑器：并排查看画板、播放原型、改文案、调 tweaks；导出 HTML、PDF 或 PNG |
-| [`claude-design-system`](skills/claude-design-system/) | 设计系统：tokens、README 品牌手册、组件预览、字体、素材分组 | 设计系统编辑器：浏览和编辑颜色、字体、组件和素材 |
-| [`claude-dashboard`](skills/claude-dashboard/) | 数据驱动的仪表盘：数据集（CSV、TSV、JSON）加上基于它们的图表、数字和表格页面 | 仪表盘页面：实时图表、筛选，以及能把每个数字追溯到原始行的 Sources 面板 |
-| [`claude-motion`](skills/claude-motion/) | 动画短片：若干场景模块，每一帧都是时间 t 的纯函数，外加一段用代码写的配乐 | Motion 播放器：播放、拖动、试听；在浏览器里导出 MP4 或 GIF |
+| [`libre-slides`](skills/libre-slides/) | 幻灯片：`project/deck.json` 加上每页一个 HTML 文件 | 幻灯片编辑器：放映、改字、拖动；导出 PDF、HTML 或 PowerPoint |
+| [`libre-design`](skills/libre-design/) | 一块画布上的多个画板：`project/canvas.json` 加上 `.dc.html` 设计组件 | 画布编辑器：并排查看画板、播放原型、改文案、调 tweaks；导出 HTML、PDF 或 PNG |
+| [`libre-design-system`](skills/libre-design-system/) | 设计系统：tokens、README 品牌手册、组件预览、字体、素材分组 | 设计系统编辑器：浏览和编辑颜色、字体、组件和素材 |
+| [`libre-dashboard`](skills/libre-dashboard/) | 数据驱动的仪表盘：数据集（CSV、TSV、JSON）加上基于它们的图表、数字和表格页面 | 仪表盘页面：实时图表、筛选，以及能把每个数字追溯到原始行的 Sources 面板 |
+| [`libre-motion`](skills/libre-motion/) | 动画短片：若干场景模块，每一帧都是时间 t 的纯函数，外加一段用代码写的配乐 | Motion 播放器：播放、拖动、试听；在浏览器里导出 MP4 或 GIF |
 | [`dataviz`](skills/dataviz/) | 在任何载体里（HTML、SVG、d3、matplotlib、plotly…）把图表做好：选图表形式、在浅色和深色下以及色弱读者都看得清的配色、图形标记、图例和提示框，附带配色校验脚本 | 不需要打开：Agent 写图表代码前先读它；把 [`palette.md`](skills/dataviz/references/palette.md) 换成你自己品牌的颜色即可 |
 
 ---
@@ -38,33 +33,33 @@ https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
 
 在幻灯片、画布和设计系统编辑器里，点击 **Comment**（或按 **C**）就能对元素或区域留下评论。评论保存在项目本地的 `comments.json`，Agent 通过 `artifact.mjs` 读取和回复。Agent 用 `comments <root> --wait` 等待评论时，编辑器会显示 **Send to agent**，让你把评论交给它处理。
 
-### `claude-slides`：幻灯片
+### `libre-slides`：幻灯片
 
-<img src="assets/screenshots/claude-slides-editor.webp" alt="claude-slides 编辑器里打开的一份讲睡眠的 5 页健康课幻灯片" width="880">
+<img src="assets/screenshots/libre-slides-editor.webp" alt="libre-slides 编辑器里打开的一份讲睡眠的 5 页健康课幻灯片" width="880">
 
 一套幻灯片就是 `project/deck.json` 加上每页一个 HTML 文件。在编辑器里可以全屏放映、直接改字、拖动元素，插入文字、图片、表格和形状，并导出成 PDF、HTML 或 PowerPoint。*上图：一份讲睡眠的 5 页健康课幻灯片，用的是一套示例设计系统。*
 
-### `claude-design`：多画板画布
+### `libre-design`：多画板画布
 
-<img src="assets/screenshots/claude-design-canvas.webp" alt="claude-design 画布上并排的咖啡订阅落地页和它的手机版注册表单" width="880">
+<img src="assets/screenshots/libre-design-canvas.webp" alt="libre-design 画布上并排的咖啡订阅落地页和它的手机版注册表单" width="880">
 
 一块画布上并排放着多个画板：`project/canvas.json` 加上每个画板一个 `.dc.html` 设计组件。画板可以当成能交互的原型来播放，在画布上播或者全屏播；也可以改文案、调 tweaks、贴便签；整份设计能导出成独立的 HTML 页面、PDF 或 PNG 图片（1× 或 2×，多个画板打包成 .zip）。*上图：一个咖啡订阅服务的落地页首屏，旁边是它的手机版注册表单。*
 
-### `claude-design-system`：设计系统
+### `libre-design-system`：设计系统
 
-<img src="assets/screenshots/claude-design-system-editor.webp" alt="claude-design-system 编辑器里 Nimbus 设计系统的概览页" width="880">
+<img src="assets/screenshots/libre-design-system-editor.webp" alt="libre-design-system 编辑器里 Nimbus 设计系统的概览页" width="880">
 
 一套设计系统包括 tokens、README 品牌手册、组件预览、字体和素材分组。在编辑器里可以浏览和编辑颜色、字体、间距、圆角、阴影、组件和素材。从组件库导入的设计系统，组件预览用的就是真组件，可以直接交互。幻灯片和画布可以安装它，之后编辑器的主题和颜色菜单就会列出它的颜色和文字样式。*上图：Nimbus，一套给天气应用做的小型设计系统。*
 
-### `claude-dashboard`：数据仪表盘
+### `libre-dashboard`：数据仪表盘
 
-<img src="assets/screenshots/claude-dashboard.webp" alt="claude-dashboard 页面里用示例数据做的 X 账号数据仪表盘" width="880">
+<img src="assets/screenshots/libre-dashboard.webp" alt="libre-dashboard 页面里用示例数据做的 X 账号数据仪表盘" width="880">
 
 一个仪表盘就是数据集（CSV、TSV 或 JSON）加上一页基于它们算出来的图表、数字和表格。图表是实时的，Sources 面板能把每个数字追溯到原始数据行。拿到新导出的数据交给 Agent，它会把文件换上，页面上的数字全部重算。数字、日期和说明文字都跟着你的语言走。*上图：一年的 X 账号每日数据，用的是示例数据。*
 
-### `claude-motion`：动画短片
+### `libre-motion`：动画短片
 
-<img src="assets/screenshots/claude-motion.webp" alt="claude-motion 播放器里播放的一部 12 秒短片，内容是一个虚构的夜市，时间线上是它的三个场景" width="880">
+<img src="assets/screenshots/libre-motion.webp" alt="libre-motion 播放器里播放的一部 12 秒短片，内容是一个虚构的夜市，时间线上是它的三个场景" width="880">
 
 一部影片由几个场景组成，每个场景是一小段 JavaScript 模块，按时间 `t` 画出当前帧；配乐由播放器在浏览器里实时合成。Agent 先问三个问题（风格、配色、时长），立即写出可以播放的粗剪，再一个场景一个场景地补全，你可以边看边等。拖动进度条、打开声音，在播放器里导出 MP4 或 GIF，全程不离开本机。*上图：一部 12 秒的虚构夜市预告片。*
 
@@ -73,10 +68,10 @@ https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
 每个 `SKILL.md` 都基本原样保留了该类型的英文原版说明，只把 Artifact 工具的调用换成了本地的等价操作。这个工具就放在每个技能里，是 `scripts/artifact.mjs`（Node 20+，仪表盘需 Node 22+；无需安装依赖）。平时 Agent 会替你运行；手动运行的话：
 
 ```bash
-node skills/claude-slides/scripts/artifact.mjs open designs/q3-review             # 启动编辑器，打印网址
-node skills/claude-slides/scripts/artifact.mjs check designs/q3-review            # 校验文件
-node skills/claude-slides/scripts/artifact.mjs upload designs/q3-review hero.jpg  # 存入图片，打印它的 /_blob/ 地址
-node skills/claude-slides/scripts/artifact.mjs list                                 # 查找磁盘上的设计系统
+node skills/libre-slides/scripts/artifact.mjs open designs/q3-review             # 启动编辑器，打印网址
+node skills/libre-slides/scripts/artifact.mjs check designs/q3-review            # 校验文件
+node skills/libre-slides/scripts/artifact.mjs upload designs/q3-review hero.jpg  # 存入图片，打印它的 /_blob/ 地址
+node skills/libre-slides/scripts/artifact.mjs list                                 # 查找磁盘上的设计系统
 ```
 
 仪表盘和影片也用同一个脚本（`write-db`、`read-db`、`upload`、`check`、`open`）写入它自己在 `<root>/db/` 下的存储。每个技能都运行自己的本地服务器，`scripts/` 里的文件都是预先构建好的 JavaScript，只要有 Node 就能运行，不用安装依赖，也不用构建。
@@ -106,21 +101,21 @@ node skills/claude-slides/scripts/artifact.mjs list                             
 
 ```bash
 # 安装到当前项目（自动检测你的 Agent）
-npx skills add JimLiu/baoyu-design
+npx skills add largepuma/libre-artifacts
 
 # …或全局安装，对所有项目生效
-npx skills add JimLiu/baoyu-design -g
+npx skills add largepuma/libre-artifacts -g
 
 # 指定某个具体的 Agent
-npx skills add JimLiu/baoyu-design --agent claude-code
-npx skills add JimLiu/baoyu-design --agent cursor
-npx skills add JimLiu/baoyu-design --agent codex
+npx skills add largepuma/libre-artifacts --agent claude-code
+npx skills add largepuma/libre-artifacts --agent cursor
+npx skills add largepuma/libre-artifacts --agent codex
 
 # 先列出仓库里有哪些技能
-npx skills add JimLiu/baoyu-design --list
+npx skills add largepuma/libre-artifacts --list
 
 # 只安装其中几个技能
-npx skills add JimLiu/baoyu-design --skill claude-slides --skill claude-dashboard
+npx skills add largepuma/libre-artifacts --skill libre-slides --skill libre-dashboard
 ```
 
 它会把技能装到 Claude Code 的 `.claude/skills/`，以及 Cursor/Codex 风格 Agent 的 `.agents/skills/`（加上 `-g` 则装到 `~/` 级别的用户目录）。
@@ -131,11 +126,11 @@ npx skills add JimLiu/baoyu-design --skill claude-slides --skill claude-dashboar
 
 ```bash
 # 更新某个技能（CLI 会提示选择安装范围）
-npx skills update claude-slides
+npx skills update libre-slides
 
 # 更新项目级或全局安装
-npx skills update claude-slides -p -y
-npx skills update claude-slides -g -y
+npx skills update libre-slides -p -y
+npx skills update libre-slides -g -y
 ```
 
 `upgrade` 也可以作为别名使用。
@@ -144,22 +139,23 @@ npx skills update claude-slides -g -y
 
 **备选方式 —— 直接把仓库 URL 发给 Agent。** 不想安装任何东西？把链接贴进对话，让 Agent 自己去拉取技能：
 
-> 阅读 https://github.com/JimLiu/baoyu-design 并按照其中的 `skills/claude-slides/SKILL.md`，根据这份 PRD 做一套 10 页的幻灯片。
+> 阅读 https://github.com/largepuma/libre-artifacts 并按照其中的 `skills/libre-slides/SKILL.md`，根据这份 PRD 做一套 10 页的幻灯片。
 
 Agent 会 clone 或抓取该仓库、加载 `SKILL.md` 然后开干 —— 临时用一次特别合适。
 
 ### 开始使用
 
-技能装好（或被抓取）之后，直接说你要什么（*「根据这份 PRD 做一套 12 页的幻灯片」*、*「把这个 CSV 做成仪表盘」*），或者点名调用：Claude Code 里用 `/claude-slides`、`/claude-design`、`/claude-design-system`、`/claude-dashboard` 或 `/claude-motion`，Codex 里用 `$claude-slides` 等。Agent 会把文件写到 `designs/<slug>/` 下，启动编辑器，再把它的 `http://127.0.0.1` 地址给你。
+技能装好（或被抓取）之后，直接说你要什么（*「根据这份 PRD 做一套 12 页的幻灯片」*、*「把这个 CSV 做成仪表盘」*），或者点名调用：Claude Code 里用 `/libre-slides`、`/libre-design`、`/libre-design-system`、`/libre-dashboard` 或 `/libre-motion`，Codex 里用 `$libre-slides` 等。Agent 会把文件写到 `designs/<slug>/` 下，启动编辑器，再把它的 `http://127.0.0.1` 地址给你。
 
 ---
 
 ## 示例 Prompt
 
-- *「用 claude-slides 做一套 Q3 复盘的幻灯片，然后导出成 PowerPoint。」*
-- *「在 claude-design 画布上并排放一个落地页和它的手机版。」*
+- *「用 libre-slides 做一套 Q3 复盘的幻灯片，然后导出成 PowerPoint。」*
+- *「在 libre-design 画布上并排放一个落地页和它的手机版。」*
 - *「把 Chakra UI 组件库做成一套设计系统，组件预览要能直接交互。」*
 - *「把这份数据分析 CSV 做成仪表盘，对比最近 28 天和再往前 28 天。」*
+- *「用这几张截图，给我们的 App 上线做一部 20 秒的 libre-motion 预告片。」*
 
 想要最好的效果，**请给它设计上下文** —— 截图、设计系统或代码库。从真实上下文出发，是对质量影响最大的一个杠杆；如果你不提供，技能也会主动向你索要。
 
@@ -167,6 +163,8 @@ Agent 会 clone 或抓取该仓库、加载 `SKILL.md` 然后开干 —— 临�
 
 ## 致谢与许可
 
-本项目把 **Anthropic** 出品的 claude.ai Artifact 类型和设计技能重新打包，使其得以在本地 Agent 上运行。这是一个独立的社区项目，与 Anthropic 无隶属或背书关系。
+libre-artifacts 由 Jim Liu 宝玉的 **[JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)** fork 而来，经上游作者同意后改名独立发布，并新增了 `libre-motion`。上游 v2.3.0 之前的历史保留在本仓库的 git 历史和 [CHANGELOG.upstream.zh.md](CHANGELOG.upstream.zh.md) 里。
 
-由 **Jim Liu 宝玉** 重新打包并维护。基于 [MIT 许可证](LICENSE) 发布。
+各技能 `scripts/editor/` 下的编辑器是 claude.ai 自己的 Artifact 类型页面，只是在本地提供服务；它们仍是 **Anthropic** 的作品，其中的第三方组件列在各自的 `third-party-licenses.txt` 里。libre-artifacts 是独立的社区项目，与 Anthropic 无隶属或背书关系。
+
+由 **[largepuma](https://github.com/largepuma)** 维护。其余部分以 [MIT 许可证](LICENSE) 发布。

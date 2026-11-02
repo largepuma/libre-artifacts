@@ -1,0 +1,66 @@
+[
+ {
+  "op": "set",
+  "path": "film/meta",
+  "data": {
+   "v": 1,
+   "title": "Night Market",
+   "updatedAt": "2026-10-31T10:00:00Z"
+  }
+ },
+ {
+  "op": "set",
+  "path": "modules/scenes.json",
+  "data": {
+   "kind": "json",
+   "text": "{\"v\": 1, \"stage\": \"final\", \"look\": \"Lantern dusk: flat lanterns and awnings swinging into place over a navy evening\", \"palettes\": [[\"#14213D\", \"#E07A3F\", \"#F6EBDD\", \"#F2C14E\"]], \"theirs\": 0, \"width\": 1920, \"height\": 1080, \"fps\": 60, \"background\": \"#14213D\", \"fonts\": {\"display\": {\"family\": \"DM Serif Display\", \"or\": \"fraunces-display\"}, \"sans\": {\"family\": \"Work Sans\", \"or\": \"instrument-sans\"}}, \"scenes\": [{\"id\": \"dusk\", \"name\": \"Lanterns up\", \"dur\": 4.5, \"desc\": \"Lanterns drop onto a wire; the name sets in.\"}, {\"id\": \"stalls\", \"name\": \"The stalls\", \"dur\": 4, \"desc\": \"Three stalls rise, one by one.\"}, {\"id\": \"come\", \"name\": \"Come hungry\", \"dur\": 4, \"desc\": \"End card with the opening night.\"}]}"
+  }
+ },
+ {
+  "op": "set",
+  "path": "modules/base.css",
+  "data": {
+   "kind": "css",
+   "text": {
+    "$file": "src/base.css"
+   }
+  }
+ },
+ {
+  "op": "set",
+  "path": "film/script",
+  "data": {
+   "code": "window.CUT = kit.scenes();"
+  }
+ },
+ {
+  "op": "set",
+  "path": "modules/scene-dusk.js",
+  "data": {
+   "kind": "js",
+   "text": {
+    "$file": "src/scene-dusk.js"
+   }
+  }
+ },
+ {
+  "op": "set",
+  "path": "modules/scene-stalls.js",
+  "data": {
+   "kind": "js",
+   "text": {
+    "$file": "src/scene-stalls.js"
+   }
+  }
+ },
+ {
+  "op": "set",
+  "path": "modules/scene-come.js",
+  "data": {
+   "kind": "js",
+   "text": {
+    "$file": "src/scene-come.js"
+   }
+  }
+ }
+]
