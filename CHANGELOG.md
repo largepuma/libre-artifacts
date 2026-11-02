@@ -2,6 +2,26 @@
 
 English | [中文](./CHANGELOG.zh.md)
 
+## 1.1.0 - 2026-11-02
+
+Brings in the upstream project's releases 2.4.0 to 2.7.1 for the four editors (the details: [CHANGELOG.upstream.md](./CHANGELOG.upstream.md)). `libre-motion` does not have these yet.
+
+### Features
+- Share on your local network: `share <root>` (or `open <root> --lan`) prints a link per role (editor, commenter, viewer); the owner gets a **Share** panel to manage who is in. Each skill has its own port: slides 4710, design 4720, design system 4730, dashboard 4740.
+- Version history: every change is kept in the project's `history/` folder with who made it; the **History** button compares, previews and restores versions. Two people's edits to one slide, artboard or file are merged, and a notice offers **Compare** and **Bring back** when one save replaced another's change.
+- Who is here: avatars, and in slides and canvas, each person's slide or artboard, cursor and selection.
+- An **Export** tab in Share lists every download (slides: PDF, HTML, PNG, PPTX); every editor can download the whole folder as a zip, also as `archive <root>`. Slides and design exports carry their fonts.
+- `libre-dashboard`: comments, like the other editors.
+- Slides and design: the **Theme** tab links to a read-only page for the design system in use.
+- A new project gets a default `.gitignore` the first time an editor opens it; each `SKILL.md` has a "Keeping it in git" section.
+
+### Fixes
+- `libre-slides`: choosing **PDF** in the Download dialog no longer crashes the page.
+- `open` works beside a TUN-mode proxy; a save that omits its base version is refused on conflict instead of overwriting.
+
+### Maintenance
+- `tools/rename-from-upstream.mjs` applies this repo's renames to skills taken from an upstream release. Upstream's DeepSeek Harness plugins and their publishing are not carried over.
+
 ## 1.0.1 - 2026-11-02
 
 ### Documentation
