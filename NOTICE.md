@@ -10,7 +10,7 @@ Copyright (c) 2026 Jim Liu 宝玉 and Copyright (c) 2026 largepuma, under the MI
 
 - The local tooling: each skill's `scripts/artifact.mjs` and, where there is one, `scripts/server.mjs` (the command line and the local editor server), the local comments, and what lets the editors run on a local machine instead of claude.ai, including each editor's `local-host.js`.
 - The parts of the skills' text written for local agents: how to open and run the editors, local paths and files, comments.
-- The READMEs, the changelogs, the images in `assets/`, the files in `.github/`, `tests/` and `examples/`.
+- The READMEs, the changelogs, the images in `assets/`, the files in `.github/`, `tests/`, `tools/` and `examples/`.
 
 ## 2. Material from Anthropic: not MIT
 
@@ -34,7 +34,7 @@ If you hold rights in anything here and want it credited differently, changed or
 
 本仓库里的内容分三类，许可各不相同。[LICENSE](LICENSE) 里的 MIT 许可只管第一类。
 
-1. **维护者自己写的部分，MIT。** 版权归 Jim Liu 宝玉（写于 libre-artifacts 所 fork 的 [JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)）和 largepuma（此后的改动，许可相同）。包括：本地命令行和编辑器服务器（各技能的 `scripts/artifact.mjs`，以及有的技能带的 `scripts/server.mjs`）、本地评论、让编辑器离开 claude.ai 在本机运行的那部分代码（含各编辑器的 `local-host.js`）；技能说明里为本地 Agent 写的部分；README、更新日志、`assets/` 里的图片、`.github/`、`tests/` 和 `examples/`。
+1. **维护者自己写的部分，MIT。** 版权归 Jim Liu 宝玉（写于 libre-artifacts 所 fork 的 [JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)）和 largepuma（此后的改动，许可相同）。包括：本地命令行和编辑器服务器（各技能的 `scripts/artifact.mjs`，以及有的技能带的 `scripts/server.mjs`）、本地评论、让编辑器离开 claude.ai 在本机运行的那部分代码（含各编辑器的 `local-host.js`）；技能说明里为本地 Agent 写的部分；README、更新日志、`assets/` 里的图片、`.github/`、`tests/`、`tools/` 和 `examples/`。
 2. **取自 Anthropic 的部分，不适用 MIT。** 权利归 Anthropic。Anthropic 没有为这些内容公开许可，本项目也不授予任何许可。包括：
    - 各 `skills/libre-*/SKILL.md` 所改编的 Artifact 类型（Slides、Design、Design System、Dashboard、Motion）技能说明；
    - `artifact-type/reference/` 里的参考文档；
