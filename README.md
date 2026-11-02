@@ -41,7 +41,7 @@ While others have the page open, their avatars sit beside History. In the slides
 
 To back a project up, move it to another computer or hand it to someone, the owner's **Whole folder (.zip)** item, last in the Share panel's Export tab (the owner's: guests can pass a link on but not export), downloads the whole folder as one zip, its history and comments included; `artifact.mjs archive <root>` does the same from the command line. Unzip it anywhere and `open` it with the same skill to carry on. This computer's server state and the share links are left out, so a copy you send is not shared until its new owner shares it.
 
-The `libre-motion` player has none of this yet: no comments, sharing or history. Tell the agent in chat what to change, at which second.
+The `libre-motion` player shares the same way and keeps the same history, Agent avatar and Whole folder (.zip) export (its Share and History buttons sit at the top right of the film). It has no comments, so `commenter` there only watches: tell the agent in chat what to change, at which second.
 
 ### `libre-slides`: slide decks
 

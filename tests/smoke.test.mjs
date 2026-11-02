@@ -69,3 +69,41 @@ test("libre-motion: check reports a scene that does not parse", () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("libre-motion: the player keeps versions of an agent's write and serves an earlier one", async () => {
+  const root = mkdtempSync(join(tmpdir(), "libre-motion-"));
+  try {
+    const cwd = join(repo, "examples", "night-market");
+    assert.equal(run("libre-motion", ["write-db", root, "batch.json"], cwd).status, 0);
+    const opened = run("libre-motion", ["open", root, "--port", "0"]);
+    assert.equal(opened.status, 0, opened.stderr);
+    const { url } = JSON.parse(opened.stdout);
+    assert.match(url, /\/motion\/[A-Za-z0-9_-]+\/$/);
+    try {
+      const write = spawnSync(process.execPath, [script("libre-motion"), "write-db", root, "-"], {
+        input: JSON.stringify([{ op: "update", path: "film/meta", data: { title: "Night Market II" } }]),
+        encoding: "utf8",
+      });
+      assert.equal(write.status, 0, write.stderr);
+      let rows = [];
+      for (let i = 0; i < 50 && !rows.some((r) => r.by === "agent"); i++) {
+        await new Promise((r) => setTimeout(r, 100));
+        rows = (await (await fetch(new URL("__history", url))).json()).rows;
+      }
+      const agent = rows.find((r) => r.by === "agent");
+      assert.ok(agent, JSON.stringify(rows));
+      assert.deepEqual(agent.files.map((f) => f.path), ["film/meta"]);
+      const first = rows.at(-1).n;
+      const then = await (await fetch(new URL(`_api/doc?path=film/meta&at=${first}`, url))).json();
+      assert.equal(then.data.title, "Night Market");
+      const listed = await (await fetch(new URL(`_api/list?path=modules&at=${first}`, url))).json();
+      assert.ok(listed.docs.some((d) => d.id === "scenes.json"));
+      const refused = await fetch(new URL(`_api/write?at=${first}`, url), { method: "POST", body: JSON.stringify({ op: "set", path: "film/meta", data: { title: "x" } }) });
+      assert.equal(refused.status, 403);
+    } finally {
+      run("libre-motion", ["stop", root]);
+    }
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

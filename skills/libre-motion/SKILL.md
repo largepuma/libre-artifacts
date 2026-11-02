@@ -184,7 +184,9 @@ writes nothing.
 | `upload <root> <file> [--name n]` | Stores an image, font or clip (≤64 MB) under `<root>/_blobs/`: `{"url": "/_blob/<id>", "contentType", …}`; its `next` spells the `assets/` document to write. Same bytes, same url. |
 | `delete-asset <root> <url \| id>` | Removes an upload no document names any more. |
 | `check <root>` | Checks the documents: shapes and limits, `scenes.json` (ids, names, seconds), a module per scene with its `kit.scene('<id>')`, JS and JSON that parse, uploads that exist. Exit 1 while `problems` > 0. It runs nothing: a scene that throws shows on the page as its error card. |
-| `open <root> [--port n]` | Starts the player on 127.0.0.1 in the background, prints `{"url", "pid", "stop", …}`; again: reuses it. `serve` is the same in the foreground, `stop <root>` ends it. |
+| `open <root> [--port n] [--lan]` | Starts the player at 127.0.0.1:4760 (the next free port up when 4760 is taken; `--port n` starts from n, `--port 0` takes any) in the background, prints `{"url", "pid", "stop", …}`; `url` is the film's own page, `/motion/<id>/`, the same from one start to the next (`/` goes there). Again: reuses it. `--lan`: also on the local network (see Sharing). `serve` is the same in the foreground, `stop <root>` ends it. |
+| `share <root>` | Opens it to the local network and prints a link per role; `--disable` / `--enable` / `--reset <role>`, `--role <guest>=<role>`, `--off`. See Sharing. |
+| `archive <root> [--out file.zip\|dir]` | The whole folder, history too, as one zip beside it (`--out`: another file or folder), to back it up, move it or send it: `{file, files, bytes, open}`. Unzipped anywhere, `open` carries on. The owner's Whole folder (.zip) in the Share panel's Export tab does the same; the server's own files and the share links stay out. |
 | `unpack <root> <new-dir>` | Lays the film out as render-offline.md's folder (player files, `cut.js`, `modules/`, `assets/`): stills only when asked. |
 
 - **A batch** is a JSON array (or `{"writes": [...]}`) of `{"op": "set" | "update" | "delete", "path":
@@ -194,10 +196,11 @@ writes nothing.
   `{"op": "set", "path": "modules/scene-pour.js", "data": {"kind": "js", "text": {"$file": "<scratch>/scene-pour.js"}}}`.
   Write the scene to a scratch file with your file tool, then `write-db` it. Scratch files go in the scratchpad
   directory your prompt names (else `<root>/src/`), never in the store's folders.
-- `update` merges fields (`null` removes one); `set` writes the whole document. There are no versions here:
-  nothing refuses a write, so read a document again right before you change it.
-- The open page watches `db/`: a write shows within a moment. `.artifact-server.json` and
-  `.artifact-server.log` beside `db/` are the server's: leave them.
+- `update` merges fields (`null` removes one); `set` writes the whole document. Nothing refuses a write as
+  out of date, so read a document again right before you change it (someone on a shared page may have).
+- The open page watches `db/`: a write shows within a moment, and becomes a version in History (see History).
+  `.artifact-server.json`, `.artifact-server.log`, `.sharing.json` and `history/` beside `db/` are the
+  server's: leave them.
 
 **Reading the references locally**: where a page says to read `artifact-type/reference/<name>.md`, read
 `<this skill's folder>/artifact-type/reference/<name>.md` with your file tool. They are the type's own, word
@@ -210,8 +213,54 @@ file; the film's `url` is `<root>`; `show_widget` is not here (questions.md's `A
 render-offline.md (after `unpack`) is the way to stills, only when asked.
 
 **Not here**: comments pinned in the page (the user describes the moment and place in chat instead: "at 0:12,
-the headline"), the Continue/Finalize buttons reaching you (the user says it in chat), other viewers, voice,
-layers and plans in the page, publishing (the folder is the film).
+the headline"; on a shared page the `commenter` role can only look), the Continue/Finalize buttons reaching you
+(the user says it in chat), voice, layers and plans in the page, publishing (the folder is the film).
+
+## Sharing
+
+`share <root>` opens the film to the local network (the same Wi-Fi or LAN, as
+`http://<this computer's address>:4760/`), starting the player if it isn't running, and prints a link per role:
+`editor` changes it (Tweaks, uploads), `commenter` and `viewer` only watch (the player has no comments).
+`open <root> --lan` (or `serve --lan`) shares it as it starts.
+
+- The person at this computer is the owner: everything, plus the Share button at the top right (the links, who
+  joined and who is online, each one's role, sharing on or off). On this computer (`127.0.0.1`) they stay the
+  owner even when they open a link.
+- Give the person the links to pass on. Whoever opens one types a name and is in as that role. The links survive
+  a restart while the server gets its port back; if not, `share <root>` prints the new ones to give out again.
+  Guests have a Share button too, with the links of their own role and the ones below it.
+- `share <root> --disable <role>` / `--enable <role>` turns a link off or on (`<role>`: one, `editor,viewer`, or
+  `all`). `--reset <role>` gives the role a new link: the old one stops working and the people who came by it
+  are out. `--role <guest>=<role>` gives someone who joined another role (`<guest>`: an id from the `guests` it
+  prints). `--off` stops sharing on the network.
+- Who is here: while someone else has the film open, their avatars sit before History. After you write
+  documents you show there as Agent, with what you changed, for about 20 s.
+- The links and the people who joined are in `<root>/.sharing.json`: leave it. It is plain http on the local
+  network: anyone there can read what passes, and a link is the permission, so send each only to the people
+  meant to have it, and `--reset` a role's link that went further. When this computer has a Tailscale address,
+  `share` also prints `tailscale`: the same links at that address, for people on the owner's tailnet.
+
+## History
+
+The server keeps the film's versions in `<root>/history/` (leave it): who changed which document, and when.
+
+- What a person changes on the page (Tweaks, an upload, the player's own font cache) is theirs, under the name
+  they joined with (the owner's: this computer's user name). A change made any other way, by `write-db` or on
+  disk, shows as "Agent". `data/…` (each person's own) is not kept. The first version is the documents as they
+  were when the server first kept a history. One person's changes close together are one version; the newest
+  500 are kept.
+- The History button (the clock beside Share) lists them, newest first, each with the documents it changed
+  (Title, Cut, Scene list, Scene · <id>, Score, Module · <name>, Asset · <name>) and their line-by-line changes.
+  Preview plays the film as it was, read-only; the owner and editors restore the whole version or one document,
+  as a new version, so nothing is lost. Uploads under `_blobs/` are never deleted by a restore.
+- Two people changing the same document at once are merged field by field; when both changed the same value the
+  later one wins and the first gets a notice on the page (Compare, Bring back, Dismiss).
+- Asked who changed something, read `<root>/history/index.json`: `versions`, oldest first, each
+  `{n, at, by, user: {name}, changes}` (`by`: `"human"`, `"agent"` for you, `"system"` for the first; `changes`:
+  path → sha256, null for a delete); a content is `<root>/history/objects/<sha256>`. To put something back, point
+  the person to History, or write the old content with `write-db`, which makes a version of yours.
+- `open` writes `<root>/.gitignore` when the folder has none, leaving out the server's files, `.sharing.json`
+  and `history/`. A `.gitignore` already there is the person's: leave it.
 
 **Never make a video or audio file. A check or a still: only when they ask for it, whatever another page says.**
 Nothing flashes more than three times a second. Names and data on screen are fictional or theirs. Never commit,
