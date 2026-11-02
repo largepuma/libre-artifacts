@@ -204,12 +204,31 @@ function sameOrigin(request) {
   }
 }
 function sendFile(request, response, file, headers) {
-  response.writeHead(200, headers);
+  const size = Number(headers["Content-Length"]);
+  const range = /^bytes=(\d*)-(\d*)$/.exec(String(request.headers.range ?? "").trim());
+  let start = 0;
+  let end = size - 1;
+  let status = 200;
+  if (range && Number.isInteger(size) && (range[1] !== "" || range[2] !== "")) {
+    if (range[1] === "") start = Math.max(0, size - Number(range[2]));
+    else {
+      start = Number(range[1]);
+      if (range[2] !== "") end = Math.min(size - 1, Number(range[2]));
+    }
+    if (start > end || start >= size) {
+      response.writeHead(416, { "Content-Range": `bytes */${size}`, "Cache-Control": "no-store" });
+      response.end();
+      return;
+    }
+    status = 206;
+    headers = { ...headers, "Content-Length": end - start + 1, "Content-Range": `bytes ${start}-${end}/${size}` };
+  }
+  response.writeHead(status, Number.isInteger(size) ? { ...headers, "Accept-Ranges": "bytes" } : headers);
   if (request.method === "HEAD") {
     response.end();
     return;
   }
-  const stream = fs.createReadStream(file);
+  const stream = status === 206 ? fs.createReadStream(file, { start, end }) : fs.createReadStream(file);
   stream.on("error", () => response.destroy());
   response.on("close", () => stream.destroy());
   stream.pipe(response);
