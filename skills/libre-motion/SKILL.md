@@ -8,6 +8,7 @@ description: >-
   GIF. Use when the user asks for an animation, motion graphic, animated video or teaser in this
   format, names libre-motion or the Motion type, or wants to revise a folder that holds
   db/modules/scenes.json. Not for footage editing, AI-generated video, or HyperFrames projects.
+license: "Mixed. The skill text, references and editors adapted from Anthropic's claude.ai Artifact types stay Anthropic's and are not MIT-licensed; the local tooling is MIT. Complete terms in NOTICE.md: https://github.com/largepuma/libre-artifacts/blob/main/NOTICE.md"
 ---
 
 # Motion

@@ -4,7 +4,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [更新日志](CHANGELOG.zh.md)
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![Best with Opus 5.5](https://img.shields.io/badge/Best%20with-Opus%205.5-d97757) ![Harness](https://img.shields.io/badge/Cursor%20%C2%B7%20Claude%20Code%20%C2%B7%20Codex-supported-1f6feb)
+[![License: MIT for own code, see NOTICE](https://img.shields.io/badge/License-MIT%20for%20own%20code%20%C2%B7%20see%20NOTICE-blue.svg)](NOTICE.md) ![Best with Opus 5.5](https://img.shields.io/badge/Best%20with-Opus%205.5-d97757) ![Harness](https://img.shields.io/badge/Cursor%20%C2%B7%20Claude%20Code%20%C2%B7%20Codex-supported-1f6feb)
 
 本仓库把 claude.ai 的 **Artifact 类型**搬到本地 Agent 上：可编辑的幻灯片、设计画布、设计系统、数据仪表盘和动画短片，每一种都用它自己的编辑器打开，编辑器就运行在你的电脑上。还有一个技能 `dataviz` 是一份图表指南：Agent 在画任何图表之前先读它，不管是在这几个技能里还是别处。
 
@@ -165,6 +165,8 @@ Agent 会 clone 或抓取该仓库、加载 `SKILL.md` 然后开干 —— 临�
 
 libre-artifacts 由 Jim Liu 宝玉的 **[JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)** fork 而来，经上游作者同意后改名独立发布，并新增了 `libre-motion`。上游 v2.3.0 之前的历史保留在本仓库的 git 历史和 [CHANGELOG.upstream.zh.md](CHANGELOG.upstream.zh.md) 里。
 
-各技能 `scripts/editor/` 下的编辑器是 claude.ai 自己的 Artifact 类型页面，只是在本地提供服务；它们仍是 **Anthropic** 的作品，其中的第三方组件列在各自的 `third-party-licenses.txt` 里。libre-artifacts 是独立的社区项目，与 Anthropic 无隶属或背书关系。
+libre-artifacts 是独立的社区项目，与 Anthropic 无隶属或背书关系，由 **[largepuma](https://github.com/largepuma)** 维护。仓库里的内容分三类，许可各不相同，详见 [NOTICE.md](NOTICE.md)：
 
-由 **[largepuma](https://github.com/largepuma)** 维护。其余部分以 [MIT 许可证](LICENSE) 发布。
+- **维护者自己写的部分**（本地命令行和编辑器服务器、本地评论、文档、测试和示例）以 [MIT 许可证](LICENSE) 发布。
+- **取自 Anthropic 的部分**权利归 Anthropic，不适用 MIT，本项目也不授予任何许可：包括改编自 Artifact 类型的技能说明和参考文档、`dataviz` 技能、取自 claude.ai 的编辑器和 Motion 播放器，以及 Anthropicons 图标字体。
+- **第三方开源代码**各按原许可，列在各编辑器的 `scripts/editor/third-party-licenses.txt` 里。

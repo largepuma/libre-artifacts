@@ -4,7 +4,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [Changelog](CHANGELOG.md)
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![Best with Opus 5.5](https://img.shields.io/badge/Best%20with-Opus%205.5-d97757) ![Harness](https://img.shields.io/badge/Cursor%20%C2%B7%20Claude%20Code%20%C2%B7%20Codex-supported-1f6feb)
+[![License: MIT for own code, see NOTICE](https://img.shields.io/badge/License-MIT%20for%20own%20code%20%C2%B7%20see%20NOTICE-blue.svg)](NOTICE.md) ![Best with Opus 5.5](https://img.shields.io/badge/Best%20with-Opus%205.5-d97757) ![Harness](https://img.shields.io/badge/Cursor%20%C2%B7%20Claude%20Code%20%C2%B7%20Codex-supported-1f6feb)
 
 This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems, data dashboards and motion films, each opened in its own editor that runs on your machine. One more skill, `dataviz`, is the chart guide the agent reads before it draws any chart, in these skills or anywhere else.
 
@@ -165,6 +165,8 @@ For best results, **give it design context** — a screenshot, a UI kit, a desig
 
 libre-artifacts is a fork of **[JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)** by Jim Liu 宝玉, renamed and published separately with the upstream author's blessing, and extended with `libre-motion`. The upstream history up to v2.3.0 is kept in this repo's git history and in [CHANGELOG.upstream.md](CHANGELOG.upstream.md).
 
-The editors under each skill's `scripts/editor/` are claude.ai's own Artifact type pages, served locally; they remain **Anthropic**'s work, and their third‑party components are listed in each `third-party-licenses.txt`. libre-artifacts is an independent community project and is not affiliated with or endorsed by Anthropic.
+libre-artifacts is an independent community project and is not affiliated with or endorsed by Anthropic. Maintained by **[largepuma](https://github.com/largepuma)**. The repository holds material under three sets of terms, set out in [NOTICE.md](NOTICE.md):
 
-Maintained by **[largepuma](https://github.com/largepuma)**. Everything else is released under the [MIT License](LICENSE).
+- **The maintainers' own work** (the local command line and editor servers, the local comments, the docs, tests and examples) is under the [MIT License](LICENSE).
+- **Material from Anthropic** stays Anthropic's and is not under the MIT License; this project grants no license to it. That covers the skill instructions and reference docs adapted from the Artifact types, the `dataviz` skill, the editors and the Motion player from claude.ai, and the Anthropicons icon fonts.
+- **Third-party open-source code** bundled in the editors keeps its own license, listed in each editor's `scripts/editor/third-party-licenses.txt`.
