@@ -2,6 +2,23 @@
 
 English | [中文](./CHANGELOG.zh.md)
 
+## 1.3.0 - 2026-11-03
+
+Brings in the upstream project's releases 2.7.2 to 2.8.2 (the details: [CHANGELOG.upstream.md](./CHANGELOG.upstream.md)). `libre-motion` is now upstream's Motion skill, which has gone further than this repo's own port of the player.
+
+### Features
+- `libre-motion`: comments on a moment of the film, sent to the agent like in the other editors; a voice track for long narrated films (up to 15 minutes), with captions that follow it; recorded music beds; `export` to MP4 from the command line, `stills`, `score`, and `record` for filming a page of your own product. Films made with 1.2.0 still open.
+- `motion-director`, a new skill that directs a film with something to say: it finds the point, writes the narration, has it voiced, times the scenes to the words and reviews the frames. It needs `libre-motion` beside it.
+- All the open artifacts of a kind share one server and port, each at its own `/<kind>/<id>/` address. Share links from earlier versions stop working.
+- Slides and design: an installed design system says when it has fallen behind its source, and **Sync** (or `ds-sync <root>`) copies it again.
+
+### Fixes
+- `libre-slides`: Chinese, Japanese and Korean text in a PowerPoint export no longer shows as boxes when the reader's computer lacks its font.
+- `share <root> --disable`, `--enable`, `--reset` and `--role` no longer open the page to the network.
+
+### Documentation
+- The README opens with a 22-second demo film and a 30-second quick start, describes the project as a local tool, and has a new screenshot of the Motion player.
+
 ## 1.2.0 - 2026-11-02
 
 ### Features
