@@ -18,7 +18,7 @@ npx skills add largepuma/libre-artifacts
 
 然后对 Agent 说：*"做一套 5 页幻灯片，讲城市里的蜜蜂。"* 它会写好幻灯片，在你电脑上打开编辑器，并把链接给你。[更多安装方式](#安装)。
 
-本仓库把 claude.ai 的 **Artifact 类型**搬到本地 Agent 上：可编辑的幻灯片、设计画布、设计系统、数据仪表盘和动画短片，每一种都用它自己的编辑器打开，编辑器就运行在你的电脑上。还有一个技能 `dataviz` 是一份图表指南：Agent 在画任何图表之前先读它，不管是在这几个技能里还是别处。
+本仓库把 claude.ai 的 **Artifact 类型**搬到本地 Agent 上：可编辑的幻灯片、设计画布、设计系统、数据仪表盘和动画短片，每一种都用它自己的编辑器打开，编辑器就运行在你的电脑上。`motion-director` 负责给这些影片当导演，从想清楚要说什么一直到成片。还有一个技能 `dataviz` 是一份图表指南：Agent 在画任何图表之前先读它，不管是在这几个技能里还是别处。
 
 > **非官方项目。** libre-artifacts 是社区项目，与 Anthropic 无隶属或背书关系。各技能沿用 claude.ai Artifact 类型的文件格式。
 
@@ -34,7 +34,8 @@ npx skills add largepuma/libre-artifacts
 | [`libre-design`](skills/libre-design/) | 一块画布上的多个画板：`project/canvas.json` 加上 `.dc.html` 设计组件 | 画布编辑器：并排查看画板、播放原型、改文案、调 tweaks；导出 HTML、PDF 或 PNG |
 | [`libre-design-system`](skills/libre-design-system/) | 设计系统：tokens、README 品牌手册、组件预览、字体、素材分组 | 设计系统编辑器：浏览和编辑颜色、字体、组件和素材 |
 | [`libre-dashboard`](skills/libre-dashboard/) | 数据驱动的仪表盘：数据集（CSV、TSV、JSON）加上基于它们的图表、数字和表格页面 | 仪表盘页面：实时图表、筛选，以及能把每个数字追溯到原始行的 Sources 面板 |
-| [`libre-motion`](skills/libre-motion/) | 动画短片：若干场景模块，每一帧都是时间 t 的纯函数，外加一段用代码写的配乐 | Motion 播放器：播放、拖动、试听；在浏览器里导出 MP4 或 GIF |
+| [`libre-motion`](skills/libre-motion/) | 动画影片：动画视频，默认 10–30 秒，要长可以加，最长 15 分钟，用代码一场一场写进影片自己在 `<root>/db/` 下的存储 | Motion 播放器：看着它一点点写出来，改台词，拖动场景长度，调样式和 Tweaks；导出 MP4 或 GIF |
+| [`motion-director`](skills/motion-director/) | 有话要说的成片：找到要说的那一点，写适合听的旁白，配音，让每一场对上台词，再像观众那样检查画面。要和 `libre-motion` 装在一起 | 同一个 Motion 播放器，从第一分钟起就开着 |
 | [`dataviz`](skills/dataviz/) | 在任何载体里（HTML、SVG、d3、matplotlib、plotly…）把图表做好：选图表形式、在浅色和深色下以及色弱读者都看得清的配色、图形标记、图例和提示框，附带配色校验脚本 | 不需要打开：Agent 写图表代码前先读它；把 [`palette.md`](skills/dataviz/references/palette.md) 换成你自己品牌的颜色即可 |
 
 ---
@@ -43,7 +44,7 @@ npx skills add largepuma/libre-artifacts
 
 这四个技能按该 Artifact 类型自己的文件格式把内容写进一个文件夹，再用这个类型的编辑器页面打开它，编辑器就在你自己的电脑上运行。Agent 写文件，编辑器立刻显示每一次写入；你在编辑器里的修改也会存回同一批文件，所以你和 Agent 可以轮流改。
 
-在幻灯片、画布、设计系统编辑器和仪表盘页面里，点击 **Comment**（或按 **C**）就能对元素或区域留下评论。评论保存在项目本地的 `comments.json`，Agent 通过 `artifact.mjs` 读取和回复。Agent 用 `comments <root> --wait` 等待评论时，编辑器会显示 **Send to Agent**，让你把评论交给它处理。
+在幻灯片、画布、设计系统编辑器和仪表盘页面里，点击 **Comment**（或按 **C**）就能对元素或区域留下评论；在 Motion 播放器里，用它的 **Comment** 按钮对影片的某个时刻留下评论。评论保存在项目本地的 `comments.json`，Agent 通过 `artifact.mjs` 读取和回复。Agent 用 `comments <root> --wait` 等待评论时，编辑器会显示 **Send to Agent**，让你把评论交给它处理。
 
 要和别人一起做，`share <root>`（或 `open <root> --lan`）把幻灯片、画布、设计系统或仪表盘开放到局域网（同一个 Wi‑Fi 或内网），每种角色打印一个链接：**editor** 能改也能评论，**commenter** 只能评论，**viewer** 只能看。拿到链接的人输个名字就进来了，他改的内容会出现在每个人的页面上，评论也写进同一份 `comments.json`。坐在这台电脑前的人是主人：**Share** 按钮里能看到谁加入了、谁在线，能改某个人的角色或把他移出去，能关掉、重新打开或重置每个链接。访客也有 Share 按钮，里面是他可以转发的链接：自己这一级和更低的角色。不用注册账号，内容不出你的网络；走的是局域网里的明文 http，网络里拿到链接的人都进得来。
 
@@ -53,7 +54,7 @@ npx skills add largepuma/libre-artifacts
 
 要备份、换电脑或者把项目交给别人时，主人在 Share 面板的 Export 标签里（只有主人有；访客可以转发链接，不能导出）选最后一项 **Whole folder (.zip)**，整个文件夹（连同版本历史和评论）打成一个 zip 下载下来；命令行里用 `artifact.mjs archive <root>` 也一样。解压到哪里都行，用同一个 skill `open` 就能接着做。这台电脑上的服务器状态和分享链接不在里面，所以发出去的副本不会自动分享，要它的新主人自己再分享。
 
-`libre-motion` 的播放器也能这样分享，同样有版本历史、Agent 头像和 Whole folder (.zip) 导出（Share 和 History 按钮在画面右上角）。它没有评论功能，所以 `commenter` 角色在这里只能看；要改哪里，直接在对话里告诉 Agent 是第几秒、哪个元素。
+`libre-motion` 的播放器也能这样分享，同样有版本历史、Agent 头像和 Whole folder (.zip) 导出（Share 和 History 按钮在画面右上角）。
 
 ### `libre-slides`：幻灯片
 
@@ -83,11 +84,11 @@ npx skills add largepuma/libre-artifacts
 
 <img src="assets/screenshots/libre-motion.webp" alt="libre-motion 播放器里播放的一部 12 秒短片，内容是一个虚构的夜市，时间线上是它的三个场景" width="880">
 
-一部影片由几个场景组成，每个场景是一小段 JavaScript 模块，按时间 `t` 画出当前帧；配乐由播放器在浏览器里实时合成。Agent 先问三个问题（风格、配色、时长），立即写出可以播放的粗剪，再一个场景一个场景地补全，你可以边看边等。拖动进度条、打开声音，在播放器里导出 MP4 或 GIF，全程不离开本机。*上图：一部 12 秒的虚构夜市预告片。*
+一部影片就是一个文件夹，里面是 Agent 用技能的脚本一场一场写进去的文档，你在播放器里看着它写出来。画面上的一切都是代码，是时间的纯函数，所以改动就是重写那一刻，不用等重新渲染。可以改台词，拖动场景长度，在 **Tweaks** 里换样式，也可以在某个时刻上留评论发给 Agent。带旁白的影片有一条配音轨：每场一段配音，用你自己的语音服务生成或者自己录，动作对着台词走，字幕跟着台词出；录好的音乐也能铺在底下当配乐。从播放器导出 MP4 或 GIF，也可以在命令行用 `export`（要有 Chrome；用 `record` 拍你自己产品的页面还要 ffmpeg）。要做有话要说的片子，就用 `motion-director`，它当导演，`libre-motion` 是它的摄制组。*上图：一部 12 秒的虚构夜市预告片。*
 
 ### 运行编辑器
 
-每个 `SKILL.md` 都基本原样保留了该类型的英文原版说明，只把 Artifact 工具的调用换成了本地的等价操作。这个工具就放在每个技能里，是 `scripts/artifact.mjs`（Node 20+，仪表盘需 Node 22+；无需安装依赖）。平时 Agent 会替你运行；手动运行的话：
+每个 `SKILL.md` 都基本原样保留了该类型的英文原版说明，只把 Artifact 工具的调用换成了本地的等价操作。这个工具就放在每个技能里，是 `scripts/artifact.mjs`（Node 20+，仪表盘和 Motion 需 Node 22+；无需安装依赖）。平时 Agent 会替你运行；手动运行的话：
 
 ```bash
 node skills/libre-slides/scripts/artifact.mjs open designs/q3-review             # 启动编辑器，打印网址
@@ -97,7 +98,7 @@ node skills/libre-slides/scripts/artifact.mjs list                              
 node skills/libre-slides/scripts/artifact.mjs share designs/q3-review           # 开放到局域网，每种角色打印一个链接
 ```
 
-仪表盘和影片也用同一个脚本（`write-db`、`read-db`、`upload`、`check`、`open`）写入它自己在 `<root>/db/` 下的存储。每个技能都运行自己的本地服务器，`scripts/` 里的文件都是预先构建好的 JavaScript，只要有 Node 就能运行，不用安装依赖，也不用构建。
+仪表盘和影片也用同一个脚本（`write-db`、`read-db`、`upload`、`check`、`open`）写入它自己在 `<root>/db/` 下的存储。同一类打开的作品共用一个本地服务器和端口，各自在 `/<kind>/<id>/` 路径下；`scripts/` 里的文件都是预先构建好的 JavaScript，只要有 Node 就能运行，不用安装依赖，也不用构建。
 
 ---
 
@@ -117,7 +118,7 @@ node skills/libre-slides/scripts/artifact.mjs share designs/q3-review           
 
 - 一个本地 Agent —— **[Cursor](https://cursor.com)**、**[Claude Code](https://claude.com/claude-code)**、**[Codex](https://developers.openai.com/codex/)**，或安装器支持的其余 70+ 个 Agent（Cline、Roo Code、GitHub Copilot……）。其中 Cursor、Claude Code 与 Codex 在技能里内置了一等的工具参考文档。
 - 模型选择 **Claude Opus 5.5**，效果最佳。
-- **Node.js**，用于运行下面的 `npx` 安装器，以及 Artifact 技能的编辑器（Node 20+，仪表盘需 Node 22+）。
+- **Node.js**，用于运行下面的 `npx` 安装器，以及 Artifact 技能的编辑器（Node 20+，仪表盘和 Motion 需 Node 22+）。
 
 ### 安装
 
@@ -169,7 +170,7 @@ Agent 会 clone 或抓取该仓库、加载 `SKILL.md` 然后开干 —— 临�
 
 ### 开始使用
 
-技能装好（或被抓取）之后，直接说你要什么（*「根据这份 PRD 做一套 12 页的幻灯片」*、*「把这个 CSV 做成仪表盘」*），或者点名调用：Claude Code 里用 `/libre-slides`、`/libre-design`、`/libre-design-system`、`/libre-dashboard` 或 `/libre-motion`，Codex 里用 `$libre-slides` 等。Agent 会把文件写到 `designs/<slug>/` 下，启动编辑器，再把它的 `http://127.0.0.1` 地址给你。
+技能装好（或被抓取）之后，直接说你要什么（*「根据这份 PRD 做一套 12 页的幻灯片」*、*「把这个 CSV 做成仪表盘」*），或者点名调用：Claude Code 里用 `/libre-slides`、`/libre-design`、`/libre-design-system`、`/libre-dashboard`、`/libre-motion` 或 `/motion-director`，Codex 里用 `$libre-slides` 等。Agent 会把文件写到 `designs/<slug>/` 下，启动编辑器，再把它的 `http://127.0.0.1` 地址给你。
 
 ---
 
@@ -180,6 +181,7 @@ Agent 会 clone 或抓取该仓库、加载 `SKILL.md` 然后开干 —— 临�
 - *「把 Chakra UI 组件库做成一套设计系统，组件预览要能直接交互。」*
 - *「把这份数据分析 CSV 做成仪表盘，对比最近 28 天和再往前 28 天。」*
 - *「用这几张截图，给我们的 App 上线做一部 20 秒的 libre-motion 预告片。」*
+- *「用 motion-director 把这篇发布文章做成一部 60 秒带旁白的影片。」*
 
 想要最好的效果，**请给它设计上下文** —— 截图、设计系统或代码库。从真实上下文出发，是对质量影响最大的一个杠杆；如果你不提供，技能也会主动向你索要。
 
@@ -187,7 +189,7 @@ Agent 会 clone 或抓取该仓库、加载 `SKILL.md` 然后开干 —— 临�
 
 ## 致谢与许可
 
-libre-artifacts 由 Jim Liu 宝玉的 **[JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)** fork 而来，经上游作者同意后改名独立发布，并新增了 `libre-motion`。上游截至 v2.7.1 的版本已合并进来，其历史保留在本仓库的 git 历史和 [CHANGELOG.upstream.zh.md](CHANGELOG.upstream.zh.md) 里。
+libre-artifacts 由 Jim Liu 宝玉的 **[JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)** fork 而来，经上游作者同意后改名独立发布。上游截至 v2.8.2 的版本已合并进来（包括它的 Motion 技能和 `motion-director`），其历史保留在本仓库的 git 历史和 [CHANGELOG.upstream.zh.md](CHANGELOG.upstream.zh.md) 里。
 
 libre-artifacts 是独立的社区项目，与 Anthropic 无隶属或背书关系，由 **[largepuma](https://github.com/largepuma)** 维护。仓库里的内容分三类，许可各不相同，详见 [NOTICE.md](NOTICE.md)：
 

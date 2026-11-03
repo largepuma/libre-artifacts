@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // Apply libre-artifacts' renames to skill folders taken from upstream JimLiu/baoyu-design.
 //
-// Usage: node tools/rename-from-upstream.mjs [skills/<name> …]   (default: the four editor skills and dataviz)
+// Usage: node tools/rename-from-upstream.mjs [skills/<name> …]   (default: the five editor skills, motion-director and dataviz)
 //
 // Port an upstream release: merge its tag (upstream tags are fetched to refs/upstream-tags/*), replace
-// skills/libre-{slides,design,design-system,dashboard} and skills/dataviz with upstream's
-// skills/claude-* and skills/dataviz of that tag, run this script, then `npm test` and open each editor.
+// skills/libre-{slides,design,design-system,dashboard,motion}, skills/motion-director and skills/dataviz with
+// upstream's skills/claude-*, skills/motion-director and skills/dataviz of that tag, run this script, then `npm test` and open each editor.
 // It is idempotent: a second run changes nothing.
 import fs from "node:fs";
 import path from "node:path";
@@ -13,7 +13,7 @@ import path from "node:path";
 const repo = path.dirname(path.dirname(new URL(import.meta.url).pathname));
 const targets = process.argv.slice(2).length
   ? process.argv.slice(2)
-  : ["skills/libre-slides", "skills/libre-design", "skills/libre-design-system", "skills/libre-dashboard", "skills/dataviz"];
+  : ["skills/libre-slides", "skills/libre-design", "skills/libre-design-system", "skills/libre-dashboard", "skills/libre-motion", "skills/motion-director", "skills/dataviz"];
 
 const NOTICE_URL = "https://github.com/largepuma/libre-artifacts/blob/main/NOTICE.md";
 const SKILL = /claude-(slides|design-system|design|dashboard|motion)\b/g;

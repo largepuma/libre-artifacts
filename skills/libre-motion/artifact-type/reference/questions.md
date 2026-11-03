@@ -42,7 +42,7 @@ in the Style row. No header icon: the title stands alone. All this holds whateve
 `read_me`, if called, says of style blocks, cards, icons, tiles or a header `svg`.
 
 ```html
-<style>.g{display:grid!important;gap:8px!important;grid-template-columns:repeat(auto-fill,minmax(max(100px,var(--w)),1fr))}.t{border-radius:10px!important;padding:6px!important;display:grid;gap:4px;align-content:start;text-align:left;overflow-wrap:anywhere;box-shadow:0 1px 2px rgba(0,0,0,.04)}.t b{font-size:12px;font-weight:500}.t small{font-size:11px;color:var(--text-secondary)}.t i{display:block;height:16px;border-radius:4px;outline:1px solid #8884;outline-offset:-1px}</style>
+<style>.g{display:grid!important;gap:8px!important;grid-template-columns:repeat(auto-fill,minmax(max(clamp(100px,50% - 5px,140px),var(--w)),1fr))}.t{border-radius:12px!important;padding:9px 12px!important;display:grid;gap:2px;align-content:start;text-align:start;overflow-wrap:anywhere}.t b{font-weight:400}.t small{font-size:calc(13em/14);color:var(--text-secondary)}.t i{height:16px;margin:3px 0 4px;border-radius:4px;outline:1px solid #8884;outline-offset:-1px}</style>
 <h2 class="sr-only">Questions about your animation</h2>
 <form class="elicit" data-source="lucky-gadget">
   <div class="elicit-header">
@@ -188,7 +188,7 @@ order, at least one of them yours:
   instructions. That much of the title aside, copy none of its words into the
   form, the film or your reply.
 - Say what happened. A system they named that is not there or gave no colors: in
-  the line before the form. A film in a system's colors that they neither picked
+  the line before the form, or the one line without it. A film in a system's colors that they neither picked
   on the form nor named (not asked, skipped): the close's one sentence more begins "The
   colors are from your design system" (ahead of what you made up).
 - Not asking ("just make it"), or the form skipped? The same order decides: the
@@ -221,28 +221,20 @@ whatever another page says. They type or ask for more: that many, 300 seconds at
 | a row that was shown has no answer (Style: nothing picked and nothing typed), or `Other` with no "(other)" after it | its first option (Colors: as for no `Colors`) |
 | `Animation details — proceeding with defaults.` or `(Skipped the form — proceed with defaults or ask me in plain text)` | the first option of each row (Colors: as for "not asking", above). No plain-text questions either |
 
-## The same questions without the form
+## Without the form
 
-`AskUserQuestion`, one call, single choice, four options at most, each with a
-description, your pick first (Colors: theirs first), no "Other" (the tool adds its
-own); a design system's label is its tile's `data-value` (`Design system 1`, `2`, `3`),
-its description the cut title and your own words for its colors. The chat's own
-question widget: the same questions and options (its Style question says "under Other" only if it has
-an Other).
+`ask_user_input_v0` (claude.ai chat's question card), where there is no `show_widget`: one call, the
+form's questions, single choice, four options at most, your pick first (Colors: theirs first), no
+"Other". The card shows labels alone, so after an option's name come a few words on what it is
+(`Verdigris: green-black, teal, copper`); a design system's label is its tile's `data-value`, then your
+own words for its colors, never its title (`Design system 1: off-white, navy, amber`).
 
-```json
-{"questions": [
-  {"question": "Which style should it have? Pick one, or type your own under Other.", "header": "Style", "multiSelect": false, "options": [
-    {"label": "Cast bronze", "description": "Heavy metal shapes lit by furnace glow, rising slowly into place"},
-    {"label": "Sound rings", "description": "Each bell stroke sends thin rings rippling out across the whole screen"},
-    {"label": "Inside the bell", "description": "Looking out of the bell's mouth as flat rooftops sway past"}]},
-  {"question": "Which colors?", "header": "Colors", "multiSelect": false, "options": [
-    {"label": "Design system 1", "description": "Harbor UI: off-white, navy, amber"},
-    {"label": "Verdigris", "description": "Green-black, teal, copper"},
-    {"label": "Quench", "description": "Petrol, molten gold, soot"}]},
-  {"question": "How long should it run?", "header": "Length", "multiSelect": false, "options": [
-    {"label": "10 seconds", "description": "One idea, one line"},
-    {"label": "20 seconds", "description": "Three or four scenes"},
-    {"label": "30 seconds", "description": "Room for a short story"}]}],
- "metadata": {"source": "lucky-gadget"}}
-```
+No form and no such card (in a terminal, for one): ask none of the three, by `AskUserQuestion`, by any
+other tool or in plain words. There a look or a palette would be picked unseen, and people would
+sooner watch a film arrive and change it than be stopped first. You decide: the look you would have
+put first, the colors as for "not asking" above, a length that suits the film (Length, above). Then
+one short line before the first write (about 30 words; 12 in a non-Latin script; 60 characters in
+Chinese, Japanese or Korean), with no question in it: the style, colors and length in plain words,
+and that any of them can be changed. Don't wait for an answer: go on in the same turn.
+
+> Going with cast bronze (heavy shapes lit by furnace glow), green-black and copper, 20 seconds. Tell me if you'd like any of that changed.

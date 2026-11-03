@@ -146,7 +146,7 @@ That is the bare shape. A finished scene, whole: finalize.md. A rough one: "How 
   `kit.css`, `kit.cursor`, `kit.svgLayer` and `kit.chip` make stays in the scene;
   `kit.video`'s `start` and `kit.typist`'s `t0` count from the scene's beginning.
   `kit.dur`: the scene's seconds. `kit.start`: where it begins in the film. `kit.fx`
-  is one canvas, shared by all scenes: set its state (font, lineWidth, fillStyle,
+  is one canvas, shared by all scenes: set its state (lineWidth, fillStyle,
   a clip) in `render`, never once in `init`.
 - A scene's own class names begin with its id (`pour-ladle`).
 - Scenes cut from one to the next: open what moves about as it was left; else build each to stand
@@ -164,7 +164,7 @@ That is the bare shape. A finished scene, whole: finalize.md. A rough one: "How 
   that wraps pushes the next one down; never each at its own `top`. A lone line sits
   in a `.words` too: `.line` has no place of its own.
 - Markup in single-quoted strings, `style="…"` in double quotes, no quotes inside
-  a style: a nested quote plays, then breaks every still and export.
+  a style: a nested quote silently ends the style; the rest is lost.
 - Helpers: `kit.el`, `kit.h`, `seg(t,a,b)` (0 to 1 across a to b), `lerp`, `clamp01`,
   `eo` `ei` `eio` (eases). The rest of the kit waits for finalize.md's step 1 (film-api.md).
   `kit.h` returns ONE element, the first in its string: wrap siblings in one root,
@@ -242,9 +242,9 @@ dropped, renamed, retimed or moved is an edit to `scenes.json` (`if_version`;
 same, finished, as finalize.md says of a final film (not in this conversation: `read`
 `artifact-type/reference/finalize.md` first): a new scene has no `rough: true`, the stage stays `"final"`, and
 `score.js` is fitted to the new times, with no `T.` of a dropped id left (it would
-sound at 0:00). Here and in finalize.md, a json module with an `about`, and `modules/refaced.json` with or
-without one, is the page's own record of what the user changed by hand: never write or delete it; its `about` says
-what counts.
+sound at 0:00). `modules/{retyped,recolored,refaced,fetched-fonts,recut,retouched}.json` are the page's own
+records: never write or delete them. If the film holds one besides fetched-fonts.json,
+first `read` `artifact-type/reference/by-hand.md`, which says what counts.
 
 ## Finalize
 

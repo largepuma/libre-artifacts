@@ -45,8 +45,9 @@ test("libre-motion: the Night Market example writes and passes check", () => {
     assert.equal(res.status, 0, res.stdout + res.stderr);
     const out = JSON.parse(res.stdout);
     assert.equal(out.problems, 0);
-    assert.equal(out.stage, "final");
-    assert.deepEqual(out.scenes.map((s) => s.module), ["written", "written", "written"]);
+    assert.equal(out.scenes.stage, "final");
+    assert.equal(out.scenes.scenes, 3);
+    assert.equal(out.modules, 5);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
@@ -96,8 +97,8 @@ test("libre-motion: the player keeps versions of an agent's write and serves an 
       const first = rows.at(-1).n;
       const then = await (await fetch(new URL(`_api/doc?path=film/meta&at=${first}`, url))).json();
       assert.equal(then.data.title, "Night Market");
-      const listed = await (await fetch(new URL(`_api/list?path=modules&at=${first}`, url))).json();
-      assert.ok(listed.docs.some((d) => d.id === "scenes.json"));
+      const listed = await (await fetch(new URL(`_api/collection?path=modules&at=${first}`, url))).json();
+      assert.ok("scenes.json" in listed.docs, JSON.stringify(Object.keys(listed.docs)));
       const refused = await fetch(new URL(`_api/write?at=${first}`, url), { method: "POST", body: JSON.stringify({ op: "set", path: "film/meta", data: { title: "x" } }) });
       assert.equal(refused.status, 403);
     } finally {

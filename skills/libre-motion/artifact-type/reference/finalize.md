@@ -5,18 +5,19 @@ instructions. The film holds `look.json`: not this page, styles.md's "Finalize".
 film of scenes is built, and `if_version`: `artifact-type/reference/rough-cut.md`. Not in
 this conversation: `read` it, with step 1's pages. `pour`, `bell` and `tip` below are its
 example's, another film's. No step here writes `film/script`: it stays the one line the
-first batch wrote, `window.CUT = kit.scenes();`. A json module with an `about`, and
-`modules/refaced.json` with or without one, is the page's own record of what the user
-changed by hand: never write or delete it; its `about` says what counts. The rules of
+first batch wrote, `window.CUT = kit.scenes();`.
+`modules/{retyped,recolored,refaced,fetched-fonts,recut,retouched}.json` are the page's own
+records: never write or delete them. If the film holds one besides fetched-fonts.json,
+first `read` `artifact-type/reference/by-hand.md`, which says what counts. The rules of
 rough-cut.md's "A scene" hold for a finished scene too, above all:
 
 - No flashes: nothing blinks or cuts more than three times a second, rough or
   finished. No scene under a second.
 - Markup in single-quoted strings, `style="…"` in double quotes, no quotes inside
-  a style: a nested quote plays, then breaks every still and export.
-- A line of words is ONE whole string literal. To move it word by word, hand it to
-  `kit.TextFx` or split that string at run time (`line.split(' ')`); never write the
-  words as separate strings or separate spans in markup.
+  a style: a nested quote silently ends the style; the rest is lost.
+- A line of words, a drawing's labels and signs too, is ONE whole string literal in an HTML element, never svg
+  `<text>` or `fillText` (svg the user gave or a `textPath` aside). Word by word: `kit.TextFx` or
+  `line.split(' ')`, never written in pieces.
 
 Four kinds of film come here. Go by what the film holds:
 
@@ -38,17 +39,14 @@ from your `list` or your last write of it.
 **The five steps**
 
 1. Read motion.md and film-api.md in one message, unless this conversation has their text, whole
-   (recreate-ui.md too if it shows their product; rough-cut.md too if it is not in this
-   conversation). sound.md waits for step 4.
+   (recreate-ui.md too if it shows their product; rough-cut.md too if it is not in this conversation). sound.md waits for step 4.
 2. **What the scenes share, ONE `batch`, your first write here, small** (uploads alone go ahead): 1,500 to 2,000
    characters of `base.css`; `shared.js` only if two listed scenes draw the same thing, and
-   most films have none. Settle the shared look
-   from `scenes.json`'s `look` and the color variables, write it and send it before you
+   most films have none. Settle the shared look from `scenes.json`'s `look` and the color variables, write it and send it before you
    think of any one scene. First `modules/base.css` (`if_version`: the version the first
    batch's reply gave; none shown: `get` it), whole: the four color variables and the type stacks as they are, then the finished look
    that scenes share (type sizes, and weights from among those that `fonts` brings, settled now; colors, radii, spacing) as classes (a headline class wears `.line`'s stack).
-   Scenes refer to it and never repeat it inline, so that a film-wide
-   change is one write. A new shade is mixed from the color variables
+   Scenes refer to it and never repeat it inline, so that a film-wide change is one write. A new shade is mixed from the color variables
    (`color-mix(in srgb, var(--main) 70%, var(--ground))`, quieter; with
    `var(--second)`, stronger; a panel: `var(--ground) 92%, var(--second)`), never
    black, white or a new hex. See-through: `color-mix(in srgb, var(--second) 20%,
@@ -60,8 +58,7 @@ from your `list` or your last write of it.
    `window` (`window.UI = { bell(kit, size) { … } }`).
    A helper takes the scene's `kit` as a parameter: the `kit` that `shared.js` itself
    sees is the film's, and what that one adds sits over every scene. Nothing shared: no
-   `shared.js`. Each font
-   and image as its `assets` document.
+   `shared.js`. Each font and image as its `assets` document.
    **Fonts.** `scenes.json`'s `fonts` stands:
    change it only when the user asks for another typeface, or their product's own face is a
    Google family (recreate-ui.md): a free `serif` or `mono` that nothing wears (none free, or words the ten can't spell: the film's `sans` stack), `scenes.json` in this batch (`if_version`); the
@@ -80,8 +77,7 @@ from your `list` or your last write of it.
    together (not at hand: go on without; E, below); each is an asset, named by its file's stem
    in `base.css` ahead of its stack, the one case where `base.css` names a face
    (`#stage { font-synthesis:style; font-family:"Face-400", var(--sans, system-ui, sans-serif) } .line { font-family:"Face-700", var(--display, var(--sans, system-ui, sans-serif)) }`).
-   A bold is a face of its own: a class that wants it names it; in js it goes ahead of
-   `kit.fonts.sans`; `fonts` stays.
+   A bold is a face of its own: a class that wants it names it; in js it goes ahead of `kit.fonts.sans`; `fonts` stays.
 3. **Each scene, in film order, one `set` each**, a new document (no `if_version`), ONE
    call per message, the scene inline in the call, written once and sent at once: they
    are watching. **No scene by way of a file or shell script, and render nothing of the
@@ -92,18 +88,15 @@ from your `list` or your last write of it.
    decides a refusal (ask, end the turn; their answer takes it up: a film still rough, by "Cut short"). Compose it from its `desc` and
    the look, and draw it in full, as below: shapes with fills, light, motion from first
    frame to last. No `rough: true`. About 2,000 characters a scene, like the one below;
-   3,500 at most (their product's UI, or a scene over 8 s: what it needs): what they
-   wait for is what you write.
+   3,500 at most (their product's UI, or a scene over 8 s: what it needs): what they wait for is what you write.
 4. **Last, ONE `batch`: the score, then the stage**, so that the film loads once. They
    asked for silence: no `score.js`, no read. Else first `read` sound.md (what it says of
    `check.ts` and `export.ts` does not hold here either).
    `modules/score.js` (new, `kind` js): `kit.score(function (S, T) { … })`. `S` as in
    sound.md; `T` holds each scene's start in seconds by id, and `T.END` the film's
-   length: `S.fx('pop', T.pour + 1)`. Then `modules/scenes.json` (`if_version`: your last
-   version of it), whole, with
+   length: `S.fx('pop', T.pour + 1)`. Then `modules/scenes.json` (`if_version`: your last version of it), whole, with
    `"stage":"final"` and nothing else changed (`fonts`, if you added it, stays).
-5. That batch ends the work: the closing words of the instructions' section 2, as quoted, and its one sentence more if there is one (of fonts: below). Four sentences at most (five: below); the link, where one is wanted, after "Here's your animation"; nothing of artifact types or how it was made; the music is not named, whatever sound.md says. Then end the turn. No stills: they are playing it and
-   will say what is off.
+5. That batch ends the work: the closing words of the instructions' section 2, as quoted, and its one sentence more if there is one (of fonts: below). Four sentences at most (five: below); the link, where one is wanted, after "Here's your animation"; nothing of artifact types or how it was made; the music is not named, whatever sound.md says. Then end the turn. No stills: they are playing it and will say what is off.
 
 **Another typeface**, on a final film: `fonts`, as rough-cut.md says, in the slot whose stack
 those words wear now, so that no stack changes, with 400 and `base.css`'s weights;
@@ -124,7 +117,7 @@ After one of these, anything you made up: a short sentence of its own (five in a
 - C. No `fonts`, no `modules/refaced.json`: "The words show in each device's own typeface:
   send me font files if you want a particular one." (They named a family for such words: it
   ranks with A.)
-- D. `modules/refaced.json` is there, you changed `sans`, the ten spell the words: "The typeface you picked on the
+- D. `modules/refaced.json` is there, you changed `sans`, the ten spell the words: "The typeface picked on the
   page still shows: set Font, under Style, to Original to see the new one."
 - E. `look` names font files, you have none, `assets` holds none: "I no longer have
   your font files, so Z shows: send them again and I'll use them."

@@ -3,65 +3,14 @@
 <head>
 <meta charset="utf-8">
 <script>
-(function(){var values={"appifact_extra_export_formats":true,"appifact_film_mov_export":true,"appifact_bottom_toolbar":false,"appifact_film_layers":false,"appifact_film_plan":false,"appifact_film_settings":{"fonts":{"fetch":"all"},"code":{"folder":"all"}},"appifact_film_voice":false};function kind(v){return v===null?"null":Array.isArray(v)?"array":typeof v}function copy(v){return JSON.parse(JSON.stringify(v))}globalThis.__appifact_flags={version:"appifact-flags:v1",ready:function(){return Promise.resolve(true)},get:function(key,fallback){if(!Object.prototype.hasOwnProperty.call(values,key)||kind(values[key])!==kind(fallback))return fallback;return copy(values[key])},all:function(){return copy(values)}};})();
+(function(){var values={"appifact_bottom_toolbar":true,"appifact_icon_set":true,"appifact_film_layers":true,"appifact_film_plan":true,"appifact_extra_export_formats":true,"appifact_film_voice":true};function kind(v){return v===null?"null":Array.isArray(v)?"array":typeof v}function copy(v){return JSON.parse(JSON.stringify(v))}globalThis.__appifact_flags={version:"appifact-flags:v1",ready:function(){return Promise.resolve(true)},get:function(key,fallback){if(!Object.prototype.hasOwnProperty.call(values,key)||kind(values[key])!==kind(fallback))return fallback;return copy(values[key])},all:function(){return copy(values)}};})();
 </script>
-<!--
-  libre-motion: the claude.ai Motion type's player, served locally by scripts/artifact.mjs serve.
-  A film's content is its store, <root>/db/<collection>/<doc_id>.json; local-host.js gives the player
-  globalThis.claude (db, assets, user, downloads) over HTTP to that server. Prebuilt; see SKILL.md.
--->
-<script src="./local-host.js"></script>
 <title>Motion</title>
-<!-- README
-# Motion appifact — shared type
-
-This page is the Motion PLAYER only: index.html + artifact-type/app.js +
-artifact-type/app.css (+ artifact-type/reference/*.md, the authoring
-method, and artifact-type/thumbnail/thumbnail.json, the gallery thumbnail
-declaration) are one published release of the Motion type, shared by every
-film made from it. Nothing about any particular film is in these files —
-not even its title. A film is a short timeline video composed from the
-user's own images, fonts and UI code; the same page, opened from file://
-with #tools, is the headless renderer for stills.
-
-## Where a film's data lives
-
-In the film's own live store (the db capability), never in a file:
-film/meta {v, title, updatedAt}; one assets/<file> {ref, mime, w, h} per
-image or font (ref = the film's own /_blob/<id> upload or a small data:
-URI); one modules/<file> {kind, text} per CSS/HTML/data module (a module
-split as file~1…file~n is joined on read); film/script {code} — the cut,
-a JavaScript program that sets window.CUT {width, height, fps, duration,
-chapters, init(kit), render(t, kit), score(S, kit)} with render a pure
-function of t. Claude writes the documents (meta first, script last) and
-revises them with the ArtifactData tool; nobody edits a film in the page. The
-player composes the records on load and on every delivery, resolves
-asset refs to bytes, and reloads the sandboxed runner when the script or
-modules change, re-seeking to the current time. An empty store is "No
-animation yet", which is what this type's own page shows. Comments are
-Frame's: the page names each pin's time and position (or its time span)
-in its anchor (animation-v1) and places pins near the playhead or on the
-timeline; it never sees their text.
-
-## Trust
-
-The cut and js modules are cross-user code, and they are the film's own
-code: like Design's artboards they run in a nested iframe ON THE ARTIFACT
-PAGE'S ORIGIN (`sandbox="allow-scripts allow-same-origin"`), so a clip or
-image streams from the artifact's `_blob/<id>` and film code runs as the
-viewer — it can reach this page's realm (the film's store, writable only in
-a session that may edit it; asset upload; the send-to-Claude verb;
-downloads; this origin's storage) and is bounded by what the artifact page
-itself may do under Frame's CSP and origin, not by the frame. The frame's
-own CSP (nothing but `'self'`, `data:` and `blob:` images, media and fetches,
-`'self'`/`data:` fonts; no workers, frames or forms) and sandbox flags (no modals, popups, top
-navigation) are hygiene for code that stays inside it. The frame receives
-no pointer or keyboard input (a host overlay owns the pointer); the host
-pins the message source and accepts only the film protocol's shapes;
-frames come back as SVG text that is only ever loaded as an <img> in a
-second, opaque-origin document, errors as text, nothing is inserted as
-HTML host-side. Record-derived strings render as React text. The type's
-`db` rules keep store writes to sessions that can edit.
+<!--
+  libre-motion: the claude.ai Motion type player, served locally by scripts/artifact.mjs serve.
+  A film's content is its store, <root>/db/<collection>/<doc_id>.json; local-host.js gives the player
+  globalThis.claude (db, assets, user, downloads, comments) over HTTP to that server. Opened from file:// with
+  #tools it is the headless renderer for stills (artifact-type/reference/render-offline.md). Prebuilt; see SKILL.md.
 
 ## Fonts
 
@@ -181,22 +130,16 @@ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 ```
-
-## Build
-
-Compiled from the appifact base image plus the appifacts-simple-animation overlay
-with the shared builder's type layout; see appifacts/artifacts/simple-animation
-for the publish wiring and the appifacts-simple-animation skill for the payload,
-the make, frame and check scripts.
 -->
-<meta name="README" content="Appifact type: Motion. This page is the shared runtime; an instance’s content (title, document, comments) lives in its live store (the db capability), written with the ArtifactData tool — this page carries none, and an empty store is an empty document. Instances are created from this type and inherit its capabilities {&quot;downloads&quot;:{},&quot;comments&quot;:{&quot;composer_only&quot;:true,&quot;customAnchors&quot;:true},&quot;room&quot;:{},&quot;db&quot;:{&quot;rules&quot;:[{&quot;path&quot;:&quot;&quot;,&quot;write&quot;:&quot;admin&quot;}]},&quot;assets&quot;:{},&quot;user&quot;:{}}. The README comment at the top of head has details.">
-<meta name="appifact-capabilities" content="{&quot;downloads&quot;:{},&quot;comments&quot;:{&quot;composer_only&quot;:true,&quot;customAnchors&quot;:true},&quot;room&quot;:{},&quot;db&quot;:{&quot;rules&quot;:[{&quot;path&quot;:&quot;&quot;,&quot;write&quot;:&quot;admin&quot;}]},&quot;assets&quot;:{},&quot;user&quot;:{}}">
+<meta name="appifact-capabilities" content="{&quot;downloads&quot;:{},&quot;comments&quot;:{&quot;composer_only&quot;:true,&quot;customAnchors&quot;:true},&quot;db&quot;:{&quot;rules&quot;:[{&quot;path&quot;:&quot;&quot;,&quot;write&quot;:&quot;admin&quot;}]},&quot;assets&quot;:{},&quot;user&quot;:{}}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script id="appifact-mode">(function(){var h=document.documentElement;function s(){var t=h.getAttribute('data-theme');if(t==='light'||t==='dark'){h.setAttribute('data-mode',t)}else{h.removeAttribute('data-mode')}}s();if(typeof MutationObserver==='function'){new MutationObserver(s).observe(h,{attributes:true,attributeFilter:['data-theme']})}})();</script>
-<link rel="stylesheet" href="artifact-type/app.css">
+
+  <link rel="stylesheet" href="./artifact-type/app.css">
 </head>
 <body>
 <div id="root"></div>
-<script src="artifact-type/app.js"></script>
+<script src="./local-host.js"></script>
+<script src="./artifact-type/app.js"></script>
 </body>
 </html>

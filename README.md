@@ -18,7 +18,7 @@ npx skills add largepuma/libre-artifacts
 
 Then ask your agent: *"Make a five-slide deck about bees in the city."* It writes the deck, opens the editor on your machine and gives you the link. [More install options](#install).
 
-This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems, data dashboards and motion films, each opened in its own editor that runs on your machine. One more skill, `dataviz`, is the chart guide the agent reads before it draws any chart, in these skills or anywhere else.
+This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems, data dashboards and motion films, each opened in its own editor that runs on your machine. `motion-director` directs those films, from the point of the film to the finished cut. One more skill, `dataviz`, is the chart guide the agent reads before it draws any chart, in these skills or anywhere else.
 
 > **Unofficial.** libre-artifacts is a community project, not affiliated with or endorsed by Anthropic. Its skills follow the file formats of claude.ai's Artifact types.
 
@@ -34,7 +34,8 @@ Everything runs on your machine: the agent you already use does the work, the ed
 | [`libre-design`](skills/libre-design/) | A canvas of artboards: `project/canvas.json` plus `.dc.html` Design Components | The canvas editor: artboards side by side, play prototypes, retype copy, adjust tweaks; export HTML, PDF or PNG |
 | [`libre-design-system`](skills/libre-design-system/) | Design systems: tokens, a README brand book, component previews, fonts, asset groups | The design system editor: browse and edit colors, type, components and assets |
 | [`libre-dashboard`](skills/libre-dashboard/) | Data‑backed dashboards: datasets (CSV, TSV, JSON) and a page of charts, numbers and tables over them | The dashboard page: live charts, filters, and a Sources panel that traces every number to its rows |
-| [`libre-motion`](skills/libre-motion/) | Short animated films: scene modules where every frame is a pure function of time, plus a code‑written score | The Motion player: play, scrub and listen; export MP4 or GIF in the browser |
+| [`libre-motion`](skills/libre-motion/) | Motion films: animated videos, 10–30 s unless you ask for more and 15 minutes at most, written as code scene by scene into the film's own store under `<root>/db/` | The Motion player: watch it fill in, retype lines, drag scene lengths, adjust style and tweaks; export MP4 or GIF |
+| [`motion-director`](skills/motion-director/) | A finished film with something to say: it finds the point, writes the narration for the ear, has it voiced, times every scene to the words, and checks the frames as a viewer would. Needs `libre-motion` beside it | The same Motion player, open from the first minute |
 | [`dataviz`](skills/dataviz/) | Better charts in any medium (HTML, SVG, d3, matplotlib, plotly…): picking the form, colors that stay readable in light and dark and for color‑blind readers, marks, legends and tooltips, with a palette validator script | Nothing to open: the agent reads it before writing chart code; swap [`palette.md`](skills/dataviz/references/palette.md) for your brand's colors |
 
 ---
@@ -43,7 +44,7 @@ Everything runs on your machine: the agent you already use does the work, the ed
 
 These four skills write the Artifact type's own file format into a folder and open it in that type's editor page, served from your machine. The agent writes the files and the editor shows each write at once; your edits in the editor are saved back into the same files, so you and the agent can take turns.
 
-In the slides, canvas and design-system editors and on the dashboard page, choose **Comment** (or press **C**) to comment on an element or area. Comments stay in the project's local `comments.json`; the agent reads and replies through `artifact.mjs`. While it listens with `comments <root> --wait`, the editor offers **Send to Agent** to send your comment for it to act on.
+In the slides, canvas and design-system editors and on the dashboard page, choose **Comment** (or press **C**) to comment on an element or area; in the Motion player, its **Comment** button comments on a moment of the film. Comments stay in the project's local `comments.json`; the agent reads and replies through `artifact.mjs`. While it listens with `comments <root> --wait`, the editor offers **Send to Agent** to send your comment for it to act on.
 
 To work together, `share <root>` (or `open <root> --lan`) opens the deck, canvas, design system or dashboard to your local network, the same Wi‑Fi or LAN, and prints a link per role: **editor** edits and comments, **commenter** comments without editing, **viewer** only looks. Whoever opens a link types a name and is in; what they change shows on everyone's page, and their comments land in the same `comments.json`. The person at this computer is the owner: the **Share** button lists who joined and who is online, changes someone's role or removes them, and turns each link off, back on or resets it. Guests get a Share button too, with the links they may pass on: their own role's and those below it. There is no account and nothing leaves your network; it is plain http, so anyone there with a link gets in.
 
@@ -53,7 +54,7 @@ While others have the page open, their avatars sit beside History. In the slides
 
 To back a project up, move it to another computer or hand it to someone, the owner's **Whole folder (.zip)** item, last in the Share panel's Export tab (the owner's: guests can pass a link on but not export), downloads the whole folder as one zip, its history and comments included; `artifact.mjs archive <root>` does the same from the command line. Unzip it anywhere and `open` it with the same skill to carry on. This computer's server state and the share links are left out, so a copy you send is not shared until its new owner shares it.
 
-The `libre-motion` player shares the same way and keeps the same history, Agent avatar and Whole folder (.zip) export (its Share and History buttons sit at the top right of the film). It has no comments, so `commenter` there only watches: tell the agent in chat what to change, at which second.
+The `libre-motion` player shares the same way and keeps the same history, Agent avatar and Whole folder (.zip) export (its Share and History buttons sit at the top right of the film).
 
 ### `libre-slides`: slide decks
 
@@ -83,11 +84,11 @@ A dashboard is datasets (CSV, TSV or JSON) and a page of charts, numbers and tab
 
 <img src="assets/screenshots/libre-motion.webp" alt="A 12-second film for a made-up night market playing in the libre-motion player, with its three scenes on the timeline" width="880">
 
-A film is a handful of scenes, each a small JavaScript module that draws its frame from the time `t`, plus a score the player synthesizes in the browser. The agent asks three questions (style, colors, length), writes a rough cut you can play at once, then fills in each scene while you watch. Scrub it, turn the sound on, and export MP4 or GIF from the player; nothing leaves your machine. *Above: a 12-second teaser for a made-up night market.*
+A film is a folder of documents the agent writes with the skill's script, scene by scene, while you watch it fill in the player. Everything on screen is code, a pure function of time, so a change is a rewrite of that moment, not a re-render you wait for. Retype a line, drag a scene's length, change the style in **Tweaks**, or comment on a moment and send it to the agent. A narrated film carries a voice track: one take a scene, from a speech provider of yours or recorded by you, with the motion timed to the words and captions that follow them; a recorded track can play as the music bed. Export MP4 or GIF from the player, or `export` from the command line (Chrome needed; `record`, for filming a page of your own product, also needs ffmpeg). For a film with a point to make, ask for `motion-director`, which directs and uses `libre-motion` as its crew. *Above: a 12-second teaser for a made-up night market.*
 
 ### Run the editors
 
-Each `SKILL.md` keeps the type's original instructions nearly word for word; only the Artifact tool calls are swapped for local ones. That tool lives inside each skill as `scripts/artifact.mjs` (Node 20+, the dashboard's Node 22+; nothing to install). The agent runs it for you; by hand:
+Each `SKILL.md` keeps the type's original instructions nearly word for word; only the Artifact tool calls are swapped for local ones. That tool lives inside each skill as `scripts/artifact.mjs` (Node 20+, the dashboard's and Motion's Node 22+; nothing to install). The agent runs it for you; by hand:
 
 ```bash
 node skills/libre-slides/scripts/artifact.mjs open designs/q3-review             # start the editor, print its URL
@@ -97,7 +98,7 @@ node skills/libre-slides/scripts/artifact.mjs list                              
 node skills/libre-slides/scripts/artifact.mjs share designs/q3-review           # open it to the local network, print a link per role
 ```
 
-A dashboard or a film is written through the same script (`write-db`, `read-db`, `upload`, `check`, `open`) into its own store under `<root>/db/`. Each skill runs its own local server, and everything in `scripts/` ships prebuilt: plain JavaScript that runs on Node alone, with nothing to install or build.
+A dashboard or a film is written through the same script (`write-db`, `read-db`, `upload`, `check`, `open`) into its own store under `<root>/db/`. All the open artifacts of a kind share one local server and port, each at its own `/<kind>/<id>/` path, and everything in `scripts/` ships prebuilt: plain JavaScript that runs on Node alone, with nothing to install or build.
 
 ---
 
@@ -117,7 +118,7 @@ A dashboard or a film is written through the same script (`write-db`, `read-db`,
 
 - A local agent — **[Cursor](https://cursor.com)**, **[Claude Code](https://claude.com/claude-code)**, **[Codex](https://developers.openai.com/codex/)**, or any of the 70+ agents the installer supports (Cline, Roo Code, GitHub Copilot…). Cursor, Claude Code, and Codex have first‑class tool references inside the skill.
 - **Claude Opus 5.5** selected as the model, for best results.
-- **Node.js**, for the `npx` installer below and for the artifact skills' editors (Node 20+, the dashboard Node 22+).
+- **Node.js**, for the `npx` installer below and for the artifact skills' editors (Node 20+, the dashboard and Motion Node 22+).
 
 ### Install
 
@@ -169,7 +170,7 @@ The agent clones or fetches the repo, loads `SKILL.md`, and proceeds — perfect
 
 ### Use it
 
-Once a skill is installed (or fetched), ask for what you want (*"Make a 12‑slide deck from this PRD"*, *"Turn this CSV into a dashboard"*) or call one by name: `/libre-slides`, `/libre-design`, `/libre-design-system`, `/libre-dashboard` or `/libre-motion` in Claude Code, `$libre-slides` and so on in Codex. The agent writes the files under `designs/<slug>/`, starts the editor, and gives you its `http://127.0.0.1` URL.
+Once a skill is installed (or fetched), ask for what you want (*"Make a 12‑slide deck from this PRD"*, *"Turn this CSV into a dashboard"*) or call one by name: `/libre-slides`, `/libre-design`, `/libre-design-system`, `/libre-dashboard`, `/libre-motion` or `/motion-director` in Claude Code, `$libre-slides` and so on in Codex. The agent writes the files under `designs/<slug>/`, starts the editor, and gives you its `http://127.0.0.1` URL.
 
 ---
 
@@ -180,6 +181,7 @@ Once a skill is installed (or fetched), ask for what you want (*"Make a 12‑sli
 - *"Turn the Chakra UI component library into a design system with live component previews."*
 - *"Turn this analytics CSV into a dashboard that compares the last 28 days with the 28 before."*
 - *"Make a 20‑second libre-motion teaser for our app launch, from these screenshots."*
+- *"Use motion-director to turn this launch post into a 60‑second narrated film."*
 
 For best results, **give it design context** — a screenshot, a UI kit, a design system, or a codebase. Starting from real context is the single biggest lever on quality; the skill will ask for it if you don't provide it.
 
@@ -187,7 +189,7 @@ For best results, **give it design context** — a screenshot, a UI kit, a desig
 
 ## Credits & license
 
-libre-artifacts is a fork of **[JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)** by Jim Liu 宝玉, renamed and published separately with the upstream author's blessing, and extended with `libre-motion`. Upstream releases up to v2.7.1 are merged in; their history is kept in this repo's git history and in [CHANGELOG.upstream.md](CHANGELOG.upstream.md).
+libre-artifacts is a fork of **[JimLiu/baoyu-design](https://github.com/JimLiu/baoyu-design)** by Jim Liu 宝玉, renamed and published separately with the upstream author's blessing, Upstream releases up to v2.8.2 are merged in, including its Motion skill and `motion-director`; their history is kept in this repo's git history and in [CHANGELOG.upstream.md](CHANGELOG.upstream.md).
 
 libre-artifacts is an independent community project and is not affiliated with or endorsed by Anthropic. Maintained by **[largepuma](https://github.com/largepuma)**. The repository holds material under three sets of terms, set out in [NOTICE.md](NOTICE.md):
 
